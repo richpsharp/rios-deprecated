@@ -4,6 +4,7 @@ import setuptools
 
 VERSION = '0.0.1a1'
 
+#Do something so it warns or doens't install or something about core dependancies of RIOS
 REQUIREMENTS = [
     'numpy',
     'scipy',

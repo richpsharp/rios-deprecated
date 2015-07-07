@@ -5,10 +5,11 @@ import logging
 import os
 import datetime
 import json
+import pkg_resources
 
 from PyQt4 import QtGui, QtCore
 
-import rios.iui
+import natcap.rios.iui
 
 try:
     QString = QtCore.QString
@@ -17,10 +18,10 @@ except AttributeError:
     QString = unicode
 
 import pygeoprocessing.geoprocessing
-from rios.iui import base_widgets
-from rios import porter_core
+from natcap.rios.iui import base_widgets
+from natcap.rios import porter_core
+import natcap.rios
 import rios_ipa
-import rios
 
 logging.basicConfig(
     format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s',
@@ -276,8 +277,9 @@ class RsatUI(base_widgets.ExecRoot):
         base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
                                        registrar, main_window)
 
+        rios_version = pkg_resources.get_distribution('natcap.rios').version
         window_title = "%s | version %s" % (
-            self.attributes['label'], rios.__version__)
+            self.attributes['label'], rios_version)
 
         main_window.setWindowTitle(window_title)
 
@@ -376,6 +378,6 @@ def build_table_dictionary(table_table):
 if __name__ == '__main__':
     APP = QtGui.QApplication(sys.argv)
     WINDOW = base_widgets.MainWindow(
-        RsatUI, 'rios_porter.json', development_menu=True)
+        RsatUI, 'rios_porter.json')
     WINDOW.show()
     APP.exec_()
