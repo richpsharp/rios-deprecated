@@ -8,6 +8,7 @@ import shutil
 import heapq
 import datetime
 import sys
+import pkg_resources
 
 from osgeo import gdal
 from osgeo import ogr
@@ -15,7 +16,7 @@ from osgeo import osr
 import numpy
 
 RIOS_PACKAGE = sys.modules['rios']
-import disk_sort
+import natcap.rios.disk_sort
 import pygeoprocessing
 
 LOGGER = logging.getLogger('IPA')
@@ -620,7 +621,7 @@ def calculate_activity_portfolio(args, report_data=None):
     LOGGER.info('sort the prefer/prevent/activity score to disk')
     for activity_index, activity_name in enumerate(activity_list):
         #Creating the activity iterators here.
-        activity_iterators[activity_index] = disk_sort.sort_to_disk(
+        activity_iterators[activity_index] = natcap.rios.disk_sort.sort_to_disk(
             budget_selection_activity_uris[activity_name],
             activity_index)
 
@@ -1509,8 +1510,7 @@ def _generate_report(report_dir, report_data):
         report_file.write('</table>')
         report_file.write('</div>')  # ends budget_year div
     report_file.write('</div>')
-    report_file.write('<p class=right_data><em>RIOS version %s</em><br/>' % RIOS_PACKAGE.__version__)
-    report_file.write('<em>InVEST version %s</em></p>' % invest_natcap.__version__)
+    report_file.write('<p class=right_data><em>RIOS version %s</em><br/>' % pkg_resources.get_distribution('natcap.rios').version)
     report_file.write('</div>')  # ends the content div
 
     report_file.write('</body></html>')

@@ -46,7 +46,7 @@ class WaterFundsRegistrar(base_widgets.ElementRegistrar):
 class WaterFundsUI(base_widgets.ExecRoot):
     def __init__(self, uri, main_window):
 
-        rios_version = pkg_resources.get_distribution('natcap.rios')
+        rios_version = pkg_resources.get_distribution('natcap.rios').version
 
         registrar = WaterFundsRegistrar(self)
         base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
