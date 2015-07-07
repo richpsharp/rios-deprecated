@@ -1,4 +1,6 @@
-"""This is the main script to load the water funds project"""
+"""This is the entry point to launch the RIOS UI"""
+
+import os
 import sys
 import logging
 import re
@@ -875,5 +877,6 @@ def main(uri):
 
 
 if __name__ == '__main__':
-    uri = 'rios_ipa.json'
+    uri = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), 'rios_ipa.json')
     main(uri)

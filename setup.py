@@ -1,5 +1,6 @@
 """RIOS setup.py script"""
-from setuptools import setup
+
+import setuptools
 
 VERSION = '0.0.1a1'
 
@@ -11,17 +12,15 @@ REQUIREMENTS = [
     'pyqt4',
     ]
 
-setup(
+setuptools.setup(
     name='natcap.rios',
     version=VERSION,
     package_dir={'natcap': 'src/natcap'},
     namespace_packages=['natcap'],
-    packages=[
-        'natcap',
-        'natcap.rios',
-        'natcap.rios.iui',
-        'natcap.rios.iui.dbfpy',
-        'natcap.rios.iui.jsonschema',
-    ],
-    install_requires=REQUIREMENTS
+    include_package_data=True,
+    packages=setuptools.find_packages('src'),
+    install_requires=REQUIREMENTS,
+    package_data={
+        'natcap.rios.iui': ['*.png']
+    }
 )
