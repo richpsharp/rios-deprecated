@@ -2,17 +2,14 @@
 import sys
 import logging
 import re
+import pkg_resources
 
 from PyQt4 import QtGui, QtCore
 
-import rios
-from invest_natcap.iui import base_widgets
-from invest_natcap.iui import iui_validator
-from invest_natcap.iui import fileio
-try:
-    from invest_natcap.invest_core import fileio as invest_fileio
-except ImportError:
-    from invest_natcap import fileio as invest_fileio
+import natcap.rios
+from natcap.rios.iui import base_widgets
+from natcap.rios.iui import iui_validator
+from natcap.rios.iui import fileio
 
 import pygeoprocessing.geoprocessing
 
@@ -47,18 +44,14 @@ class WaterFundsRegistrar(base_widgets.ElementRegistrar):
 class WaterFundsUI(base_widgets.ExecRoot):
     def __init__(self, uri, main_window):
 
+        rios_version = pkg_resources.get_distribution('natcap.rios')
+
         registrar = WaterFundsRegistrar(self)
-
-        if rios.is_release():
-            rios_version = rios.__version__
-        else:
-            rios_version = 'dev'
-
         base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
                 registrar, main_window, rios_version)
 
         window_title = "%s | version %s" % (
-            self.attributes['label'], rios.__version__)
+            self.attributes['label'], rios_version)
 
         main_window.setWindowTitle(window_title)
         self.okpressed = False

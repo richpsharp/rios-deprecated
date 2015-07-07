@@ -1,0 +1,135 @@
+body {
+    margin: 20px;
+    line-height: 1.5em;
+    display: block;
+    background-color: #bbb;
+}
+
+.content {
+    -moz-border-radius: 10px  10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 15px;
+}
+
+h1, h2, h3, h4 {
+    color: #2f353e;
+}
+
+a {
+    color: #19a9e5;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1487b7;
+    text-decoration: underline;
+}
+
+table {
+    border-spacing: 0px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+table tr:hover{
+    background-color: #D1E7FA;
+}
+
+table th {
+    padding-left: 7px;
+    padding-right: 15px;
+}
+
+table tr td,
+table tr th {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ccc;
+}
+
+table tr th {
+    color: #039;
+    padding-left: 20px;
+}
+
+table thead th{
+    border-bottom: 2px solid #6678b1;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-bottom: 15px;
+    color: #039;
+}
+
+table td {
+    font-family: monospace;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: right;
+    padding-right: 15px;
+}
+
+table thead tr:hover {
+    background-color: #fff;
+}
+
+table tr.activity td{
+}
+
+table tr.floating_budget{
+}
+
+table tr.budget_totals td{
+    font-style: italic;
+}
+
+div.report_section {
+    border-top: 1px dashed #BBBBBB;
+    padding-bottom: 50px;
+    padding-top: 30px;
+    height: auto;
+}
+
+div.budget_year,
+div#ipa_total {
+    overflow: hidden;
+    border-left: 3px solid #fff;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+div.budget_year:hover {
+    border-left: 3px solid #6678b1
+}
+
+div.budget_year div.budget_year_title {
+    float: left;
+    width: 200px;
+    height: auto;
+    padding-left: 30px;
+}
+
+div.budget_year div.budget_year_title h3 {
+    vertical-align: middle;
+    font-style: italic;
+    color: #2d4163;
+}
+
+h3 span.subtitle {
+    font-size: 0.75em;
+    font-weight: normal;
+    color: #777;
+}
+
+div.budget_year table {
+    float: right;
+    width: 75%;
+}
+
+.right_data {
+    text-align: right;
+    font-size: 0.8em;
+    color: #555;
+}

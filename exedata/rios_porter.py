@@ -8,7 +8,7 @@ import json
 
 from PyQt4 import QtGui, QtCore
 
-import invest_natcap.iui
+import rios.iui
 
 try:
     QString = QtCore.QString
@@ -17,7 +17,7 @@ except AttributeError:
     QString = unicode
 
 import pygeoprocessing.geoprocessing
-from invest_natcap.iui import base_widgets
+from rios.iui import base_widgets
 from rios import porter_core
 import rios_ipa
 import rios

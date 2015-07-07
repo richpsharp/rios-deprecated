@@ -1,0 +1,183 @@
+{
+    "id": "rios_rsat",
+    "modelName": "rios_rsat",
+    "label": "RIOS Portfolio Translator",
+    "targetScript": "rios.porter_core",
+    "height": 800,
+    "width": 1000,
+    "elements": [
+        {
+            "id": "workspace_text",
+            "type": "label",
+            "label": "<b>Workspace Definition</b>"
+        },
+        {
+        "id": "workspace_list",
+        "type": "list",
+        "elements": [
+        {
+            "id": "workspace_dir",
+            "type": "rsat_workspace_folder",
+            "label": "Select RIOS workspace to build scenario from",
+            "required": true,
+            "defaultValue": "../workspace",
+            "args_id": "workspace_dir",
+            "helpText": "This is the directory that contains outputs from a prior run of RIOS Investment Portfolio Adviser.  Outputs from this process will also be written to the selected folder.",
+            "validateAs": {
+                "type": "folder",
+                "mustExist": true,
+                "permissions": "rwx",
+                "contains": ["1_investment_portfolio_adviser_workspace"]
+            }
+        },
+        {
+            "id" : "results_suffix",
+            "args_id" : "results_suffix",
+            "type": "text",
+            "dataType": "string",
+            "label": "If your portfolio includes a suffix, indicate it here so the workspace loads correctly",
+            "defaultValue": "",
+            "returns": {"ifEmpty": "pass"},
+            "required": false,
+            "helpText":"If you ran IPA with a suffix, you must also indicate that suffix here so the workspace can be loaded correctly."
+        },
+        {
+            "id": "load_workspace_button",
+            "type": "button",
+            "label": "Load RIOS workspace",
+            "required": true,
+            "defaultValue": "../workspace",
+            "args_id": "load_workspace_button",
+            "helpText": "This is the directory that will hold the output ",
+            "validateAs": {
+            "type": "folder"
+            }
+        },
+
+        {
+            "id": "years_to_transition",
+            "type": "text",
+            "label": "Number of years for transition",
+            "required": true,
+            "defaultValue": "",
+            "args_id": "years_to_transition",
+            "helpText": "An integer value specifying over how many years the transitions are expected to occur.  This value should guide users' selection of proportional transitions in the following boxes.  It is displayed in the final report for reference purposes, but is not otherwise used in the transition calculations.",
+            "validateAs": {
+            "type": "number",
+            "gteq": 0
+            }
+        }]
+    },
+    {
+        "id": "protection_text",
+        "type": "label",
+        "label": "<b>Protection</b>"
+    },
+    {
+    "id": "protection_list",
+    "type": "list",
+    "elements": [
+        {
+            "id": "avoided_transition_dropdown",
+            "type": "dropdown",
+            "label": "Uprotected (degraded) lulc",
+            "required": true,
+            "options": ["<load RIOS workspace first>"],
+            "returns": "strings",
+            "args_id": "avoided_transition_lulc",
+            "helpText": "This is the landcover type that areas selected for protection are most likely to degrade to in the absence of protection."
+        },
+        {
+            "id": "percent_transitioned",
+            "type": "text",
+            "label": "Proportional transition (number between 0 and 1)",
+            "required": true,
+            "defaultValue": "0.65",
+            "args_id": "protection_transition_percent",
+            "helpText": "This is how closely the protected landcover will transition to the unprotected (degraded) landcover, and is used to interpolate parameters in the biophysical table. Should be a number between 0 and 1.",
+            "validateAs": {
+            "type": "number",
+            "lteq": 1.0,
+            "gteq": 0
+            }
+        }
+    ]
+    },
+    {
+        "id": "restoration_text",
+        "type": "label",
+        "label": "<b>Restoration</b>"
+    },
+    {
+    "id": "restoration_list",
+    "type": "list",
+    "elements": [
+        {
+            "id": "restoration_table",
+            "args_id": "restoration_table",
+            "type": "table",
+            "rows": [],
+            "columns": [
+                    {
+                        "id": "old_lulc",
+                        "label": "Old LULC"
+                    },
+                    {
+                        "id": "transition",
+                        "label": "Transition"
+                    },
+                    {
+                        "id": "activity",
+                        "label": "Activity"
+                    },
+                    {
+                        "id": "new_lulc",
+                        "label": "New LULC"
+                    },
+                    {
+                        "id": "pt",
+                        "label": "Proportional Transition"
+                    }
+            ]
+        }]
+    },
+    {
+        "id": "agriculture_text",
+        "type": "label",
+        "label": "<b>Agriculture</b>"
+    },
+    {
+    "id": "agriculture_list",
+    "type": "list",
+    "elements": [
+        {
+            "id": "agriculture_table",
+            "args_id": "agriculture_table",
+            "type": "table",
+            "rows": [],
+            "columns": [
+                {
+                    "id": "old_lulc",
+                    "label": "Old LULC"
+                },
+                {
+                    "id": "transition",
+                    "label": "Transition"
+                },
+                {
+                    "id": "activity",
+                    "label": "Activity"
+                },
+                {
+                    "id": "new_lulc_type",
+                    "label": "New LULC"
+                },
+                {
+                    "id": "percent_improvement",
+                    "label": "Proportional Transition"
+                }
+            ]
+        }
+        ]
+    }]
+}

@@ -1,0 +1,161 @@
+{
+    "id": "other2_objective",
+    "modelName": "other2_objective",
+    "label": "Water funds prioritizer",
+    "saveLastRun": true,
+    "loadLastRun": false,
+    "scrollable": false,
+    "elements": [
+	{
+	    "id": "rios_model_type",
+	    "args_id": "rios_model_type",
+	    "type": "hiddenElement",
+	    "returns": "rios_tier_0"
+	},
+        {
+            "id": "other2_recharge_text",
+            "type": "label",
+            "label": "\nUpload your data for each factor listed below using the raster location boxes. Default transition weights in the table give equal weight to each of the four processes regulating the service (upslope source, on-pixel source, on-pixel retention, downslope retention). You can edit the weights, using values between 0 and 1, to change the importance of each factor.\n\n"
+        },
+        {
+            "id": "other2_weightsTable",
+            "type": "table",
+            "args_id": "priorities",
+            "required": true,
+            "columns": 
+                {
+                    "inheritFrom": "water_funds_prioritizer",
+                    "useAttribute": "global_landscape_transitions",
+                    "fromOtherUI": "super"
+                },
+            "rows": [
+                {
+                    "id": "protection_row",
+                    "label": {"inheritFrom": "protection_score_group", "useAttribute": "label"},
+                    "defaultValue": [ 1.0, 0, 0, 0, 0, 0, 0]
+                },
+                {
+                    "id": "restoration_row",
+                    "label": {"inheritFrom": "restoration_score_group", "useAttribute": "label"},
+                    "defaultValue": [ 0, 1.0, 1.0, 0, 0, 0, 0]
+                },
+                {
+                    "id": "ag_management_row",
+                    "label": {"inheritFrom": "ag_management_score_group", "useAttribute": "label"},
+                    "defaultValue": [ 0, 0, 0, 1.0, 1.0, 1.0, 1.0]
+                }
+            ]
+        },
+        {
+            "id": "rios_model_type",
+            "type": "hiddenElement",
+            "args_id": "rios_model_type",
+            "returns": "rios_tier_0"
+        },
+        {
+            "id":"protection_score_group",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Protection score layer",
+            "elements": [
+                {
+                    "id": "ProtectionRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "ProtectionRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "protection_score_group",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "",
+                            "required": false,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "ProtectionBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "protection_score_group",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"restoration_score_group",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Restoration score layer",
+            "elements": [
+                {
+                    "id": "restorationRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "restorationRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "restoration_score_group",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "",
+                            "required": false,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "restorationBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "restoration_score_group",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"ag_management_score_group",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Agricultural management score layer",
+            "elements": [
+                {
+                    "id": "ag_managementRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "ag_managementRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "ag_management_score_group",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "",
+                            "required": false,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "ag_managementBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "ag_management_score_group",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
