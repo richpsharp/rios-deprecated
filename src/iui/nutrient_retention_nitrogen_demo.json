@@ -1,0 +1,302 @@
+{
+    "id": "nutrient_retention_nitrogen_objective",
+    "modelName": "nutrient_retention_nitrogen_objective",
+    "label": "Water funds prioritizer",
+    "saveLastRun": false,
+    "loadLastRun": false,
+    "scrollable": false,
+    "elements": [
+	{
+	    "id": "rios_model_type",
+	    "args_id": "rios_model_type",
+	    "type": "hiddenElement",
+	    "returns": "rios_tier_0"
+	},
+        {
+            "id": "nutrient_retention_text",
+            "type": "label",
+            "label": "\nUpload your data for each factor listed below using the raster location boxes. Default transition weights in the table give equal weight to each of the four processes regulating the service (upslope source, on-pixel source, on-pixel retention, downslope retention). You can edit the weights, using values between 0 and 1, to change the importance of each factor.\n\n"
+        },
+        {
+            "id": "nutrient_retention_N_weightsTable",
+            "type": "table",
+            "args_id": "priorities",
+            "required": true,
+            "columns":
+                {
+                    "inheritFrom": "water_funds_prioritizer",
+                    "useAttribute": "global_landscape_transitions",
+                    "fromOtherUI": "super"
+                },
+            "rows": [
+                {
+                    "id": "upslope",
+                    "label": {"inheritFrom": "upslopeGroup", "useAttribute": "label"},
+                    "defaultValue": [ 1, 1, 1, 1, 1, 1, 1]
+                },
+                {
+                    "id": "downslopeRetentionIndex",
+                    "label": {"inheritFrom": "downslopeRetentionIndexGroup", "useAttribute": "label"},
+                    "defaultValue": [ "~1", "~1", "~1", "~1", "~1", "~1", "~1"]
+                },
+                {
+                    "id": "soilDepth",
+                    "label": {"inheritFrom": "soilDepthGroup", "useAttribute": "label"},
+                    "defaultValue": [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+                },
+                {
+                    "id": "onpixelSource",
+                    "label": {"inheritFrom": "onpixelSourceGroup", "useAttribute": "label"},
+                    "defaultValue": [ "~0.5", 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+                },
+                {
+                    "id": "onPixelRetention",
+                    "label": {"inheritFrom": "onPixelRetentionGroup", "useAttribute": "label"},
+                    "defaultValue": [ 0.5, "~0.5", "~0.5", "~0.5", "~0.5", "~0.5", "~0.5"]
+                },
+                {
+                    "id": "riparianCommunity",
+                    "label": {"inheritFrom": "riparianCommunityGroup", "useAttribute": "label"},
+                    "defaultValue": [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+                },
+                {
+                    "id": "beneficiaries",
+                    "label": {"inheritFrom": "beneficiariesGroup", "useAttribute": "label"},
+                    "defaultValue": [ 1, 1, 1, 1, 1, 1, 1]
+                }
+            ]
+        },
+        {
+            "id": "rios_model_type",
+            "type": "hiddenElement",
+            "args_id": "rios_model_type",
+            "returns": "rios_tier_0"
+        },
+        {
+            "id":"downslopeRetentionIndexGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Downslope retention index",
+            "elements": [
+                {
+                    "id": "downslopeRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "downslopeRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "downslopeRetentionIndexGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "downslopeBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "downslopeRetentionIndexGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"upslopeGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Upslope source",
+            "elements": [
+                {
+                    "id": "upslopeRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "upslopeRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "upslopeGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "upslopeBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "upslopeGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"soilDepthGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Soil depth",
+            "elements": [
+                {
+                    "id": "soilDepthRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "soilDepthRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "soilDepthGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "soilDepthBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "soilDepthGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"onPixelRetentionGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "On-pixel retention",
+            "elements": [
+                {
+                    "id": "onPixelRetentionRasterList",
+                    "type": "list",
+                    "elements": [
+			{
+			    "id": "onPixelRetentionKey",
+			    "type": "label",
+			    "label": "Maps to 'N_Ret' in LULC Biophysical Coefficients table.",
+			    "args_id": ["factors",
+                                        {"inheritFrom": "onPixelRetentionGroup",
+                                         "useAttribute": "label"},
+                                         "bins"],
+			    "returns": {"uri": "general_lulc_coefficients.csv",
+                                        "key_field": "lulc_general",
+					"value_field": "N_Ret",
+					"raster_uri": "/general_lulc.tif"}
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"onpixelSourceGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "On-pixel source",
+            "elements": [
+                {
+                    "id": "onpixelRasterList",
+                    "type": "list",
+                    "elements": [
+			{
+			    "id": "onPixelSourceKey",
+			    "type": "label",
+			    "label": "Maps to 'N_Exp' in LULC Biophysical Coefficients table.",
+			    "args_id": ["factors",
+                                        {"inheritFrom": "onpixelSourceGroup",
+                                         "useAttribute": "label"},
+                                         "bins"],
+			    "returns": {"uri": "general_lulc_coefficients.csv",
+                                        "key_field": "lulc_general",
+					"value_field": "N_Exp",
+					"raster_uri": "/general_lulc.tif"}
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"riparianCommunityGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Riparian continuity",
+            "elements": [
+                {
+                    "id": "riparianCommunityRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "riparianCommunityRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "riparianCommunityGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "riparianCommunityBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "riparianCommunityGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"beneficiariesGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Beneficiaries",
+            "elements": [
+                {
+                    "id": "beneficiariesRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "beneficiariesRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "beneficiariesBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,184 @@
+{
+    "id": "budget_selection_ui",
+    "modelName": "budget_selection",
+    "label": "Budget Selection",
+    "elements": 
+    [
+        {
+            "id": "budget_selection_group",
+            "type": "container",
+            "label": "Budget Selection",
+            "args_id": "budget_config",
+            "elements":
+            [
+                {
+                    "id": "budget_is_annual",
+                    "type": "checkbox",
+                    "label": "Budget is annual",
+                    "args_id": "type",
+                    "defaultValue": false
+                },
+                {
+                    "id": "num_years_list",
+                    "type": "list",
+                    "elements":
+                    [
+                        {
+                            "id": "num_years",
+                            "type": "text",
+                            "width": 30,
+                            "validText": "[1-9]?[0-9]*",
+                            "dataType": "int",
+                            "label": "Number of years",
+                            "enabledBy": "budget_is_annual",
+                            "args_id": "years_to_spend",
+                            "requiredIf" : ["budget_is_annual"]
+                        },
+                        {
+                            "id": "left_over_money",
+                            "type": "dropdown",
+                            "label": "If money cannot be spent:",
+                            "options": ["Report remainder",
+                                        "Proportionally reallocate"],
+                            "returns": "ordinals"
+                        }
+                    ]
+                },
+                {
+                    "id": "money_available_table",
+                    "type": "table",
+                    "args_id":"activity_budget",
+                    "columns": 
+                    {
+                        "inheritFrom": "water_funds_prioritizer",
+                        "useAttribute": "global_landscape_transitions",
+                        "fromOtherUI": "super"
+                    },
+                    "rows":
+                    [
+                        {
+                            "id":"money_available_row",
+                            "label": "Money available"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "activity_cost_group",
+            "type": "container",
+            "label": "Activity Cost",
+            "elements":
+            [
+                {
+                    "id": "activity_cost_table",
+                    "type": "table",
+                    "args_id": "activities",
+                    "columns":
+                    {
+                        "inheritFrom": "water_funds_prioritizer",
+                        "useAttribute": "global_landscape_transitions",
+                        "fromOtherUI": "super"
+                    },
+                    "rows":
+                    [
+                        {
+                            "id":"cost_per_hectare_row",
+                            "label": "Cost per hectare\n($1000 per meter unit)"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "allocation_type_group",
+            "type": "container",
+            "label": "Types of Allocation",
+            "elements":
+            [
+                {
+                    "id":"allocation_ranking_table",
+                    "type": "table",
+                    "args_id": "activity_preference",
+                    "columns": 
+                    [
+                        {
+                            "id": "serviceshed_column",
+                            "label": "Serviceshed"
+                        },
+                        {
+                            "id": "activity_column",
+                            "label": "Activity %"
+                        },
+                        {
+                            "id": "objective_prioritization_column",
+                            "label": "Objective prioritization"
+                        }
+                    ],
+                    "rows":
+                    [
+                        {
+                            "id": "ranking_row",
+                            "label": "Ranking"
+                        }
+                    ]
+                },
+                {
+                    "id": "serviceshed_container",
+                    "type": "container",
+                    "label": "Serviceshed",
+                    "elements":
+                    [
+                        {
+                            "id": "shapefile_list",
+                            "type": "list",
+                            "elements":
+                            [
+                                {
+                                    "id": "servicesheds_file",
+                                    "type": "file",
+                                    "label": "Servicesheds",
+                                    "args_id": ["allocation_config", "serviceshed_factor", "data_source_uri"]
+                                },
+                                {
+                                    "id": "field_dropdown",
+                                    "type": "dropdown",
+                                    "label": "Field with weights",
+                                    "options": ["field1", "field2", "field3"],
+                                    "returns": "strings",
+                                    "args_id": ["allocation_config", "serviceshed_factor", "activity_preference"]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "activity_allocation_container",
+                    "type": "container",
+                    "label": "Activity",
+                    "elements":
+                    [
+                        {
+                            "id": "activity_allocation_table",
+                            "type": "table",
+                            "args_id": ["allocation_config", "activity_preference"],
+                            "columns":
+                            {
+                                "inheritFrom": "water_funds_prioritizer",
+                                "useAttribute": "global_landscape_transitions",
+                                "fromOtherUI": "super"
+                            },
+                            "rows":
+                            [
+                                {
+                                    "id":"allocation_weight_row",
+                                    "label": "Weight"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

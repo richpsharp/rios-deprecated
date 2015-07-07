@@ -1,0 +1,54 @@
+lucode,LULC_desc,riparian_rest,silvopastoral,protection,terracing,agroforestry
+1,alfalfa,1,0,0,1,1
+2,bare soil,1,0,0,1,1
+3,barley,1,0,0,1,1
+4,coffee,1,0,0,1,1
+5,conifer forest or woodland,0,0,1,0,0
+6,cotton,1,0,0,1,1
+7,temperate evergreen broadleaf forest,0,0,1,0,0
+8,feedlot,1,0,0,0,0
+9,giant cane,1,0,0,0,0
+10,mine,1,0,0,0,0
+11,"mixed forest, agriculture",1,0,0,1,1
+12,"mixed forest, agriculture, pasture",1,1,0,1,1
+13,"mixed forest, pasture",1,1,0,0,0
+14,mixed urban,0,0,0,0,0
+15,oats,1,0,0,1,1
+16,open water,0,0,1,0,0
+17,other high N export crops ,1,0,0,1,1
+18,other low N export crops ,1,0,0,1,1
+19,paramo,0,0,1,0,0
+20,perennial ice/snow,0,0,1,0,0
+21,permanent crops,1,0,0,1,1
+22,pine plantation,1,0,0,0,0
+23,potatoes,1,0,0,1,1
+24,rapeseed,1,0,0,1,1
+25,riparian grassland,0,0,1,0,0
+26,shrub/scrub,0,0,1,0,0
+27,soy beans,1,0,0,1,1
+28,sugarcane,1,0,0,1,1
+29,swamp grass,0,0,1,0,0
+30,tea,1,0,0,1,1
+31,temperate corn,1,0,0,1,1
+32,temperate deciduous forest,0,0,1,0,0
+33,temperate grassland,0,0,1,0,0
+34,temperate mixed agriculture,1,0,0,1,1
+35,temperate mixed forest,0,0,1,0,0
+36,temperate pasture,1,1,0,0,0
+37,temperate urban,0,0,0,0,0
+38,tropical corn,1,0,0,1,1
+39,tropical deciduous forest,0,0,1,0,0
+40,tropical grassland,0,0,1,0,0
+41,tropical mixed agriculture,1,0,0,1,1
+42,tropical montane/rain forest,0,0,1,0,0
+43,tropical pasture,1,1,0,0,0
+44,tropical urban,0,0,0,0,0
+45,tropical/subtropical mixed forest,0,0,1,0,0
+46,tundra,0,0,1,0,0
+47,wetland,0,0,1,0,0
+48,wheat,1,0,0,1,1
+49,woody riparian vegetation,0,0,1,0,0
+50,swamp forest/marsh,0,0,1,0,0
+51,floodplain forest,0,0,1,0,0
+52,roads (paved),0,0,0,0,0
+53,tropical evergreen forest,0,0,1,0,0
