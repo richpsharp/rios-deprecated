@@ -2,7 +2,7 @@
     "id": "rios_rsat",
     "modelName": "rios_rsat",
     "label": "RIOS Portfolio Translator",
-    "targetScript": "rios.porter_core",
+    "targetScript": "natcap.rios.porter_core",
     "height": 800,
     "width": 1000,
     "elements": [
