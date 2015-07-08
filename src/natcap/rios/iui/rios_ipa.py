@@ -877,6 +877,5 @@ def main(uri):
 
 
 if __name__ == '__main__':
-    uri = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), 'rios_ipa.json')
+    uri = 'rios_ipa.json'
     main(uri)
