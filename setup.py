@@ -18,7 +18,6 @@ setuptools.setup(
     version=VERSION,
     package_dir={'natcap': 'src/natcap'},
     namespace_packages=['natcap'],
-    include_package_data=True,
     packages=setuptools.find_packages('src'),
     install_requires=REQUIREMENTS,
     package_data={
