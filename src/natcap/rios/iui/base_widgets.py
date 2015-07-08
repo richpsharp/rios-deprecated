@@ -2496,9 +2496,14 @@ class Root(DynamicElement):
 
 class EmbeddedUI(Root):
     def __init__(self, attributes, registrar):
+        #try to find the file w/ the given uri
         uri = attributes['configURI']
         if not os.path.isfile(uri):
-            raise IOError("Can't find file: %s" % uri)
+            #try to find the file w.r.t. current module
+            base_dir = os.path.dirname(os.path.realpath(__file__))
+            uri = os.path.join(base_dir, attributes['configURI'])
+            if not os.path.isfile(uri):
+                raise IOError("Can't find file: %s" % uri)
 
         layout = QtGui.QVBoxLayout()
         self.super = registrar.root_ui

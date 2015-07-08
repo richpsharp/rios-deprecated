@@ -869,13 +869,10 @@ class ThievingHideableFileEntry(base_widgets.HideableFileEntry):
         else:
             return base_widgets.HideableFileEntry.value(self)
 
-def main(uri):
-    app = QtGui.QApplication(sys.argv)
-    window = base_widgets.MainWindow(WaterFundsUI, uri)
-    window.show()
-    app.exec_()
-
-
 if __name__ == '__main__':
-    uri = 'rios_ipa.json'
-    main(uri)
+    APP = QtGui.QApplication(sys.argv)
+    MODULE_DIR = os.path.dirname(os.path.realpath(__file__))
+    WINDOW = base_widgets.MainWindow(
+        WaterFundsUI, os.path.join(MODULE_DIR, 'rios_ipa.json'))
+    WINDOW.show()
+    APP.exec_()

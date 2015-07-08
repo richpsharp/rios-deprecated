@@ -22,7 +22,7 @@ setuptools.setup(
     packages=setuptools.find_packages('src'),
     install_requires=REQUIREMENTS,
     package_data={
-        'natcap.rios.iui': ['*.png', 'exedata/*.json'],
+        'natcap.rios.iui': ['*.png', '*.json'],
         'natcap.rios': ['report_style.css']
     }
 )

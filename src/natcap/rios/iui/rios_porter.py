@@ -374,10 +374,10 @@ def build_table_dictionary(table_table):
         raise UndefinedTransitionAmount(error_message)
     return table_dictionary
 
-
 if __name__ == '__main__':
     APP = QtGui.QApplication(sys.argv)
+    MODULE_DIR = os.path.dirname(os.path.realpath(__file__))
     WINDOW = base_widgets.MainWindow(
-        RsatUI, 'rios_porter.json')
+        RsatUI, os.path.join(MODULE_DIR, 'rios_porter.json'))
     WINDOW.show()
     APP.exec_()
