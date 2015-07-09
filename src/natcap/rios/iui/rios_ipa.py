@@ -869,7 +869,11 @@ class ThievingHideableFileEntry(base_widgets.HideableFileEntry):
         else:
             return base_widgets.HideableFileEntry.value(self)
 
-if __name__ == '__main__':
+def launch_ui(sys_argv):
+    """Used to launch the RIOS IPA user interface
+
+        sys_argv - a reference to sys.argv from a __main__ invokation"""
+
     APP = QtGui.QApplication(sys.argv)
     MODULE_DIR = os.path.dirname(os.path.realpath(__file__))
     WINDOW = base_widgets.MainWindow(
