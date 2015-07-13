@@ -7,14 +7,12 @@ import json
 import shutil
 import heapq
 import datetime
-import sys
 
 from osgeo import gdal
 from osgeo import ogr
 from osgeo import osr
 import numpy
 
-RIOS_PACKAGE = sys.modules['rios']
 import natcap.rios.disk_sort
 import pygeoprocessing
 
