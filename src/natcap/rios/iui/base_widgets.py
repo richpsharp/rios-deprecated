@@ -2193,6 +2193,8 @@ class Tab(DynamicGroup):
 
 class Root(DynamicElement):
     def __init__(self, uri, layout, object_registrar):
+        if not os.path.isfile(uri):
+            raise IOError("IUI json file not found: %s" % uri)
         self.config_loader = fileio.JSONHandler(uri)
         attributes = self.config_loader.get_attributes()
 
