@@ -4,7 +4,6 @@ import os
 import sys
 import logging
 import re
-import pkg_resources
 
 from PyQt4 import QtGui, QtCore
 
@@ -46,7 +45,7 @@ class WaterFundsRegistrar(base_widgets.ElementRegistrar):
 class WaterFundsUI(base_widgets.ExecRoot):
     def __init__(self, uri, main_window):
 
-        rios_version = pkg_resources.get_distribution('natcap.rios').version
+        rios_version = natcap.rios.__version__
 
         registrar = WaterFundsRegistrar(self)
         base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),

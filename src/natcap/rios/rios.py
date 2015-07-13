@@ -8,7 +8,6 @@ import shutil
 import heapq
 import datetime
 import sys
-import pkg_resources
 
 from osgeo import gdal
 from osgeo import ogr
@@ -1510,7 +1509,7 @@ def _generate_report(report_dir, report_data):
         report_file.write('</table>')
         report_file.write('</div>')  # ends budget_year div
     report_file.write('</div>')
-    report_file.write('<p class=right_data><em>RIOS version %s</em><br/>' % pkg_resources.get_distribution('natcap.rios').version)
+    report_file.write('<p class=right_data><em>RIOS version %s</em><br/>' % natcap.rios.__version__)
     report_file.write('</div>')  # ends the content div
 
     report_file.write('</body></html>')

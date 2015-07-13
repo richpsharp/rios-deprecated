@@ -5,7 +5,6 @@ import logging
 import os
 import datetime
 import json
-import pkg_resources
 
 from PyQt4 import QtGui, QtCore
 
@@ -277,7 +276,7 @@ class RsatUI(base_widgets.ExecRoot):
         base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
                                        registrar, main_window)
 
-        rios_version = pkg_resources.get_distribution('natcap.rios').version
+        rios_version = natcap.rios.__version__
         window_title = "%s | version %s" % (
             self.attributes['label'], rios_version)
 

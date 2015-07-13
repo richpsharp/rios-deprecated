@@ -1,7 +1,7 @@
 """RIOS IPA Launch Script"""
 
 import sys
-import pkg_resources
+import multiprocessing
 
 import natcap
 import natcap.rios
@@ -13,5 +13,5 @@ import scipy.special._ufuncs
 import scipy.special._ufuncs_cxx
 
 if __name__ == '__main__':
-	print pkg_resources.get_distribution('natcap.rios').version
+	print natcap.rios.__version__
 	natcap.rios.iui.rios_ipa.launch_ui(sys.argv)

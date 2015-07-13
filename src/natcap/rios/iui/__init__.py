@@ -1,7 +1,6 @@
 """natcap.rios.iui __init__.py module"""
 
 import os
-import pkg_resources
 import logging
 import platform
 import sys
@@ -79,11 +78,10 @@ def log_model(model_name, model_version=None):
         },
     }
 
-    data['model_version'] = pkg_resources.get_distribution(
-    	'natcap.rios').version
+    data['model_version'] = natcap.rios.__version__
 
     try:
         urlopen(Request(path, urlencode(data)))
     except:
         # An exception was thrown, we don't care.
-        print 'an exception encountered when logging'   
+        print 'an exception encountered when logging'

@@ -1,4 +1,3 @@
 """RIOS module"""
-#import pkg_resources
 
-#__version__ = pkg_resources.get_distribution('natcap.rios').version
+__version__ = '0.0.1a1.richfixthis'
