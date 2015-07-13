@@ -3,7 +3,7 @@ import glob
 
 from PyInstaller.compat import is_win
 
-a = Analysis(['rios_ipa.py'],
+a = Analysis(['exescripts/rios_ipa.py'],
              pathex=[],
              hiddenimports=[],
              hookspath=None,
