@@ -5,6 +5,7 @@ import multiprocessing
 
 import natcap
 import natcap.rios
+import natcap.rios.rios
 import natcap.rios.iui.rios_ipa
 
 import scipy.linalg.cython_blas
