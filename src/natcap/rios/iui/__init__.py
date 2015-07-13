@@ -6,6 +6,8 @@ import platform
 import sys
 import locale
 
+import natcap.rios
+
 # Set up logging for the modelUI
 # I haven't been able to figure out why, but for some reason I have to add a new
 # StreamHandler to the LOGGER object for information to be printed to stdout.  I
