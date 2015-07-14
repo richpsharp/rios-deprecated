@@ -2,7 +2,7 @@
 ; in through the command-line.
 !define PRODUCT_NAME "RIOS"
 !define PRODUCT_VERSION "${VERSION} ${ARCHITECTURE}"
-!define PRODUCT_BUILD_FOLDER "${PY2EXE_FOLDER}"
+!define PRODUCT_BUILD_FOLDER "${DIST_FOLDER}"
 !define UNINSTALL_PATH "Uninstall ${PRODUCT_NAME} ${PRODUCT_VERSION}"
 !define PRODUCT_PUBLISHER "The Natural Capital Project"
 !define PRODUCT_WEB_SITE "http://www.naturalcapitalproject.org"
@@ -33,7 +33,7 @@ SetCompressorDictSize 64
 !include "x64.nsh"
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\LICENSE.txt"
+!insertmacro MUI_PAGE_LICENSE "..\..\LICENSE.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -132,9 +132,6 @@ Function .onInit
  newadvsplash::show 2000 1000 5000 -1 "$PLUGINSDIR\RIOS_splash_v.jpg"
 FunctionEnd
 
-
-
-
 !define REG_KEY_FOLDER "${PRODUCT_PUBLISHER} ${PRODUCT_NAME} ${PRODUCT_VERSION}"
 !define REGISTRY_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${REG_KEY_FOLDER}"
 Section "Install" SEC01
@@ -143,7 +140,7 @@ Section "Install" SEC01
   writeUninstaller "$INSTDIR\${UNINSTALL_PATH}.exe"
 
   ; Desired files are up one directory and in the timestamped RIOS folder.
-  File /r "..\${PRODUCT_BUILD_FOLDER}\*"
+  File /r "..\..\${PRODUCT_BUILD_FOLDER}\*"
 
   ; Create start  menu shortcuts.
   !define SMPATH "$SMPROGRAMS\${PRODUCT_NAME} ${PRODUCT_VERSION}"

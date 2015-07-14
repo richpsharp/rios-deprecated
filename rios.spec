@@ -1,5 +1,7 @@
 # -*- mode: python -*-
 import glob
+import os
+import shutil
 
 from PyInstaller.compat import is_win
 
@@ -60,8 +62,12 @@ for a, basename, basename_exe in analysis_object_tuples:
 
 args = exe_objects + binaries + zipfiles + datas
 
+DEST_DIRECTORY = 'rios_dest'
+if os.path.isdir(os.path.join('dist', DEST_DIRECTORY)):
+  shutil.rmtree(os.path.join('dist', DEST_DIRECTORY))
+
 coll = COLLECT(
         *args,
-        name="rios_dest",
+        name=DEST_DIRECTORY,
         strip=None,
         upx=False)
