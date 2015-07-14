@@ -1,3 +1,4 @@
 """RIOS module"""
 
-__version__ = '0.0.1a1.richfixthis'
+import natcap.versioner
+__version__ = natcap.versioner.vcs_version()

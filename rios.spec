@@ -65,11 +65,3 @@ coll = COLLECT(
         name="rios_dest",
         strip=None,
         upx=False)
-
-#coll = COLLECT(exe,
-#               a.binaries,
-#               a.zipfiles,
-#               a.datas,
-#               strip=None,
-#               upx=False,
-#               name='rios_ipa')
