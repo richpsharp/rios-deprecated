@@ -37,6 +37,8 @@ for a, basename, basename_exe in analysis_object_tuples:
     ('natcap/rios/report_style.css',
     'src/natcap/rios/report_style.css', 'DATA')]
 
+  a.datas += [('.', 'installer/windows/RIOS-2-square.ico', 'DATA')]
+
   pyz = PYZ(a.pure)
 
   exe = EXE(
@@ -51,7 +53,8 @@ for a, basename, basename_exe in analysis_object_tuples:
     debug=False,
     strip=None,
     upx=False,
-    console=True)
+    console=True,
+    icon='installer/windows/RIOS-2-square.ico')
 
   exe_objects.append(exe)
   binaries.append(a.binaries)
