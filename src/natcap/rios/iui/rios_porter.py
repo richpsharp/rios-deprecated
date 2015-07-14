@@ -373,7 +373,11 @@ def build_table_dictionary(table_table):
         raise UndefinedTransitionAmount(error_message)
     return table_dictionary
 
-if __name__ == '__main__':
+
+def launch_ui(sys_argv):
+    """Used to launch the RIOS PORTER user interface
+
+        sys_argv - a reference to sys.argv from a __main__ invokation"""
     APP = QtGui.QApplication(sys.argv)
     MODULE_DIR = os.path.dirname(os.path.realpath(__file__))
     WINDOW = base_widgets.MainWindow(
