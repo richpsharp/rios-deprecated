@@ -21,9 +21,9 @@
 
 
 ; Set the compression size and type.
-SetCompressor /FINAL /SOLID lzma
-SetCompressorDictSize 64
-
+;SetCompressor /FINAL /SOLID lzma
+;SetCompressorDictSize 64
+SetCompressor /SOLID zlib
 
 
 ; MUI 1.67 compatible macro settings------
@@ -144,12 +144,11 @@ Section "Install" SEC01
 
   ; Create start  menu shortcuts.
   !define SMPATH "$SMPROGRAMS\${PRODUCT_NAME} ${PRODUCT_VERSION}"
-  !define RIOS_ICON "$INSTDIR\rios_data\RIOS-2-square.ico"
+  !define RIOS_ICON "$INSTDIR\RIOS-2-square.ico"
 
   CreateDirectory "${SMPATH}"
-  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (1) Investment Portfolio Adviser.lnk" "$INSTDIR\ipa_rios.bat" "" ${RIOS_ICON}
-  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (2) Portfolio Translator.lnk" "$INSTDIR\porter_rios.bat" "" ${RIOS_ICON}
-  CreateShortCut "${SMPATH}\${PRODUCT_NAME} Documentation.lnk" "$INSTDIR\RIOSGuide_Combined_07May2015.pdf"
+  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (1) Investment Portfolio Adviser.lnk" "$INSTDIR\rios_ipa.exe" "" ${RIOS_ICON}
+  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (2) Portfolio Translator.lnk" "$INSTDIR\rios_porter.exe" "" ${RIOS_ICON}
 
   ; Write registry keys for convenient uninstallation via add/remove programs.
   ; Inspired by the example at
