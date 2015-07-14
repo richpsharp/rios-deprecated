@@ -1,4 +1,4 @@
 """RIOS module"""
 
 import natcap.versioner
-__version__ = natcap.versioner.vcs_version()
+__version__ = natcap.versioner.get_version('natcap.rios')
