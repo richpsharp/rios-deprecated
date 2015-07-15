@@ -61,7 +61,7 @@ for a, basename, basename_exe in analysis_object_tuples:
   exe = EXE(
     pyz,
     a.binaries + [
-        ('geos_c.dll', os.path.join(shapely.__path__, 'geos_c.dll', 'BINARY')),
+        ('geos_c.dll', os.path.join(shapely.__path__[0], 'geos_c.dll'), 'BINARY'),
         ('msvcp90.dll', 'C:\\Windows\\System32\\msvcp90.dll', 'BINARY'),
         ('msvcr90.dll', 'C:\\Windows\\System32\\msvcr90.dll', 'BINARY'),
     ] if is_win else a.binaries,
