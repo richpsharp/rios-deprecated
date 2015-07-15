@@ -14,6 +14,7 @@ HIDDENIMPORTS = [
   'natcap.rios.rios',
   'natcap.rios.disk_sort',
   'natcap.versioner',
+  'natcap.rios.version',
   'multiprocessing',
   'multiprocessing.process',
   'multiprocessing.util',
