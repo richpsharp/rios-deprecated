@@ -1,18 +1,17 @@
-"""This is the main script to load the water funds project"""
+"""This is the entry point to launch the RIOS UI"""
+
+import os
 import sys
 import logging
 import re
+import pkg_resources
 
 from PyQt4 import QtGui, QtCore
 
-import rios
-from invest_natcap.iui import base_widgets
-from invest_natcap.iui import iui_validator
-from invest_natcap.iui import fileio
-try:
-    from invest_natcap.invest_core import fileio as invest_fileio
-except ImportError:
-    from invest_natcap import fileio as invest_fileio
+import natcap.rios
+from natcap.rios.iui import base_widgets
+from natcap.rios.iui import iui_validator
+from natcap.rios.iui import fileio
 
 import pygeoprocessing.geoprocessing
 
@@ -47,18 +46,14 @@ class WaterFundsRegistrar(base_widgets.ElementRegistrar):
 class WaterFundsUI(base_widgets.ExecRoot):
     def __init__(self, uri, main_window):
 
+        rios_version = pkg_resources.get_distribution('natcap.rios').version
+
         registrar = WaterFundsRegistrar(self)
-
-        if rios.is_release():
-            rios_version = rios.__version__
-        else:
-            rios_version = 'dev'
-
         base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
                 registrar, main_window, rios_version)
 
         window_title = "%s | version %s" % (
-            self.attributes['label'], rios.__version__)
+            self.attributes['label'], rios_version)
 
         main_window.setWindowTitle(window_title)
         self.okpressed = False
@@ -874,13 +869,10 @@ class ThievingHideableFileEntry(base_widgets.HideableFileEntry):
         else:
             return base_widgets.HideableFileEntry.value(self)
 
-def main(uri):
-    app = QtGui.QApplication(sys.argv)
-    window = base_widgets.MainWindow(WaterFundsUI, uri)
-    window.show()
-    app.exec_()
-
-
 if __name__ == '__main__':
-    uri = 'rios_ipa.json'
-    main(uri)
+    APP = QtGui.QApplication(sys.argv)
+    MODULE_DIR = os.path.dirname(os.path.realpath(__file__))
+    WINDOW = base_widgets.MainWindow(
+        WaterFundsUI, os.path.join(MODULE_DIR, 'rios_ipa.json'))
+    WINDOW.show()
+    APP.exec_()

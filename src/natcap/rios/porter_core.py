@@ -171,6 +171,14 @@ def load_lulc_types(general_coefficients_uri):
     general_lulc_dict = pygeoprocessing.geoprocessing.get_lookup_from_csv(
         general_coefficients_uri, 'lucode')
 
+    #This fixes an issue where the table might have blank inputs and create
+    #string based keys and values.
+    for key in general_lulc_dict.keys():
+        try:
+            _ = int(key)
+        except ValueError:
+            del general_lulc_dict[key]
+
     lulc_dict = {}
     for lucode in general_lulc_dict:
         #Grab just the first two elements from the line, that'll be the lulc

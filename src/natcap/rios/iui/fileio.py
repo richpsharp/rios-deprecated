@@ -10,8 +10,7 @@ import datetime
 
 from PyQt4 import QtCore
 
-import natcap.invest
-from dbfpy import dbf
+from natcap.rios.iui.dbfpy import dbf
 
 def settings_folder():
     """Return the file location of the user's settings folder.  This folder
@@ -69,13 +68,7 @@ class LastRunHandler(JSONHandler):
         if version is not None:
             invest_version = version
         else:
-            # If we aren't on a release, use a 'dev' release version for naming the
-            # lastrun json file.
-            if not natcap.invest.is_release():
-                invest_version = 'dev'
-            else:
-                invest_version = natcap.invest.__version__
-
+            invest_version = 'dev'
         uri = '%s_lastrun_%s.json' % (modelname, invest_version)
         print('lastrun URI:', uri)
         set_folder = settings_folder().decode(sys.getfilesystemencoding())
@@ -565,7 +558,6 @@ def save_model_run(arguments, module, out_file):
         '""""',
         'This is a saved model run from %s.' % module,
         'Generated: %s' % current_time.strftime('%c'),
-        'InVEST version: %s' % natcap.invest.__version__,
         '"""'
     ]
 

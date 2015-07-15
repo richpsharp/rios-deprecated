@@ -16,14 +16,11 @@ import tempfile
 from types import StringType
 import locale
 from importlib import import_module
+import ctypes
 
-import natcap.invest
-import natcap.invest.iui
-from natcap.invest.iui import fileio as iui_fileio
-from natcap.invest import fileio as fileio
-import pygeoprocessing.geoprocessing
+import natcap.rios.iui
 
-LOGGER = natcap.invest.iui.get_ui_logger(None)
+LOGGER = natcap.rios.iui.get_ui_logger(None)
 ENCODING = sys.getfilesystemencoding()
 
 # If we're not on windows, python doesn't know what a
@@ -36,6 +33,69 @@ if current_os != 'Windows':
 
 # This class is to be used if certain WindowsErrors or IOErrors are encountered.
 class InsufficientDiskSpace(Exception): pass
+
+def _get_free_space(folder='/', unit='auto'):
+    """Get the free space on the drive/folder marked by folder.  Returns a float
+        of unit unit.
+
+        folder - (optional) a string uri to a folder or drive on disk. Defaults
+            to '/' ('C:' on Windows')
+        unit - (optional) a string, one of ['B', 'MB', 'GB', 'TB', 'auto'].  If
+            'auto', the unit returned will be automatically calculated based on
+            available space.  Defaults to 'auto'.
+
+        returns a string marking the space free and the selected unit.
+        Number is rounded to two decimal places.'"""
+
+    units = {'B': 1024,
+             'MB': 1024**2.0,
+             'GB': 1024**3.0,
+             'TB': 1024**4.0}
+
+    if platform.system() == 'Windows':
+        if folder == '/':
+            folder = 'C:'
+
+        free_bytes = ctypes.c_ulonglong(0)
+        ctypes.windll.kernel32.GetDiskFreeSpaceExW(ctypes.c_wchar_p(folder),
+            None, None, ctypes.pointer(free_bytes))
+        free_space = free_bytes.value
+    else:
+        try:
+            space = os.statvfs(folder)
+        except OSError:
+            # Thrown when folder does not yet exist
+            # In this case, we need to take the path to the desired folder and
+            # walk backwards along its directory tree until we find the mount
+            # point.  This mount point is then used for statvfs.
+            abspath = os.path.abspath(folder)
+            while not os.path.ismount(abspath):
+                abspath = os.path.dirname(abspath)
+            space = os.statvfs(abspath)
+
+        # space.f_frsize is the fundamental file system block size
+        # space.f_bavail is the num. free blocks available to non-root user
+        free_space = (space.f_frsize * space.f_bavail)
+
+    # If antomatic unit detection is preferred, do it.  Otherwise, just get the
+    # unit desired from the units dictionary.
+    if unit == 'auto':
+        units = sorted(units.iteritems(), key=lambda unit: unit[1], reverse=True)
+        selected_unit = units[0]
+        for unit, multiplier in units:
+            free_unit = free_space / multiplier
+            if free_unit % 1024 == free_unit:
+                selected_unit = (unit, multiplier)
+        factor = selected_unit[1]  # get the multiplier
+        unit = selected_unit[0]
+    else:
+        factor = units[unit]
+
+    # Calculate space available in desired units, rounding to 2 places.
+    space_avail = round(free_space/factor, 2)
+
+    # Format the return string.
+    return str('%s %s' % (space_avail, unit))
 
 def locate_module(module_list, path=None):
     """Search for and return an executable module object as long as the target
@@ -343,8 +403,7 @@ class Executor(threading.Thread):
             ('Numpy', pkg_ver('numpy')),
             ('Scipy', pkg_ver('scipy')),
             ('OSGEO', pkg_ver('osgeo')),
-            ('Shapely', pkg_ver('shapely')),
-            ('InVEST', natcap.invest.__version__),
+            ('Shapely', pkg_ver('shapely'))
         ]
 
         function('Build details')
@@ -515,11 +574,9 @@ class Executor(threading.Thread):
             model_version = None
 
         try:
-            LOGGER.info('Running InVEST version "%s"', natcap.invest.__version__)
             LOGGER.info('Python architecture: %s', platform.architecture())
-            LOGGER.info('Disk space remaining for workspace: %s',
-                        fileio.get_free_space(workspace))
-            natcap.invest.log_model(model_name, model_version)  # log model usage to ncp-dev
+            LOGGER.info('Disk space remaining for workspace: %s', _get_free_space(args['workspace_dir']))
+            natcap.rios.iui.log_model(model_name, model_version)  # log model usage to ncp-dev
 
             LOGGER.info('Pointing temporary directory at the workspace at %s' % args['workspace_dir'])
             temporary_path = os.path.join(args['workspace_dir'], 'tmp')
@@ -624,7 +681,8 @@ class Executor(threading.Thread):
                 LOGGER.error('Cannot find default file browser. Platform: %s |' +
                     ' folder: %s', platform.system(), workspace)
 
-        LOGGER.info('Disk space free: %s', fileio.get_free_space(workspace))
+        LOGGER.info(
+            'Disk space free: %s', _get_free_space(args['workspace_dir']))
         # Log the elapsed time.
         elapsed_time = round(time.time() - model_start_time, 2)
         LOGGER.info('Elapsed time: %s', self.format_time(elapsed_time))

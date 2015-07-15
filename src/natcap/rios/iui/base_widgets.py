@@ -15,7 +15,7 @@ except AttributeError:
     # For when we can't use API version 1
     QString = unicode
 
-import natcap.invest.iui
+import natcap.rios.iui
 import iui_validator
 import executor
 import registrar
@@ -77,7 +77,7 @@ class DynamicElement(QtGui.QWidget):
         # Save a local logger instance with the logger name reflecting the class
         # we're in.
         try:
-            self.LOGGER = natcap.invest.iui.get_ui_logger('bw.%s.%s' %
+            self.LOGGER = natcap.rios.iui.get_ui_logger('bw.%s.%s' %
                 (self.__class__.__name__, attributes['id'][0:10]))
         except KeyError as e:
             print "cant' find ID %s %s" % (str(attributes), self.__class__.__name__)
@@ -2496,7 +2496,15 @@ class Root(DynamicElement):
 
 class EmbeddedUI(Root):
     def __init__(self, attributes, registrar):
+        #try to find the file w/ the given uri
         uri = attributes['configURI']
+        if not os.path.isfile(uri):
+            #try to find the file w.r.t. current module
+            base_dir = os.path.dirname(os.path.realpath(__file__))
+            uri = os.path.join(base_dir, attributes['configURI'])
+            if not os.path.isfile(uri):
+                raise IOError("Can't find file: %s" % uri)
+
         layout = QtGui.QVBoxLayout()
         self.super = registrar.root_ui
         print('super_ui', self.super)
@@ -2649,7 +2657,7 @@ class ExecRoot(Root):
 
             if filename != '':
                 arguments = self.assembleOutputDict()
-                natcap.invest.iui.fileio.save_model_run_json(arguments, model, filename)
+                natcap.rios.iui.fileio.save_model_run_json(arguments, model, filename)
 
     def save_to_python(self):
         """Save the current state of the UI to a python file after checking that
@@ -2684,7 +2692,7 @@ class ExecRoot(Root):
 
             if filename != '':
                 arguments = self.assembleOutputDict()
-                natcap.invest.iui.fileio.save_model_run(arguments, model, filename)
+                natcap.rios.iui.fileio.save_model_run(arguments, model, filename)
 
     def find_element_ptr(self, element_id):
         """Return an element pointer if found.  None if not found."""

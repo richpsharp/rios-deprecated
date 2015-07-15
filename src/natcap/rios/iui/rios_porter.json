@@ -2,7 +2,7 @@
     "id": "rios_rsat",
     "modelName": "rios_rsat",
     "label": "RIOS Portfolio Translator",
-    "targetScript": "rios.porter_core",
+    "targetScript": "natcap.rios.porter_core",
     "height": 800,
     "width": 1000,
     "elements": [
@@ -20,7 +20,7 @@
             "type": "rsat_workspace_folder",
             "label": "Select RIOS workspace to build scenario from",
             "required": true,
-            "defaultValue": "../workspace",
+            "defaultValue": "~/Documents/rios_workspace",
             "args_id": "workspace_dir",
             "helpText": "This is the directory that contains outputs from a prior run of RIOS Investment Portfolio Adviser.  Outputs from this process will also be written to the selected folder.",
             "validateAs": {
