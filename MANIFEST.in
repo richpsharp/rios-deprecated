@@ -1,0 +1,6 @@
+include HISTORY.rst
+include LICENSE.txt
+include README.rst
+include setup.cfg
+include src/natcap/rios/iui/*.png  src/natcap/rios/iui/*.json
+include src/natcap/rios/report_style.css
