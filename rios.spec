@@ -6,6 +6,22 @@ import shutil
 from PyInstaller.compat import is_win
 
 SCRIPTS = glob.glob('exescripts/*.py')
+DEST_DIRECTORY = 'rios_dest'
+
+HIDDENIMPORTS = [
+  'natcap.rios',
+  'natcap.rios.rios',
+  'natcap.rios.disk_sort',
+  'natcap.versioner',
+  'multiprocessing',
+  'multiprocessing.process',
+  'multiprocessing.util',
+  '_multiprocessing',
+  'scipy.linalg.cython_blas',
+  'scipy.linalg.cython_lapack',
+  'scipy.special._ufuncs',
+  'scipy.special._ufuncs_cxx',
+]
 
 analysis_object_tuples = []
 for script in SCRIPTS:
@@ -13,7 +29,7 @@ for script in SCRIPTS:
   a = Analysis(
     [script],
     pathex=[],
-    hiddenimports=[],
+    hiddenimports=HIDDENIMPORTS,
     hookspath=None,
     runtime_hooks=None)
   analysis_object_tuples.append((a, basename, basename+'.exe'))
@@ -64,10 +80,6 @@ for a, basename, basename_exe in analysis_object_tuples:
   print script
 
 args = exe_objects + binaries + zipfiles + datas
-
-DEST_DIRECTORY = 'rios_dest'
-if os.path.isdir(os.path.join('dist', DEST_DIRECTORY)):
-  shutil.rmtree(os.path.join('dist', DEST_DIRECTORY))
 
 coll = COLLECT(
         *args,
