@@ -1,6 +1,9 @@
 RIOS: Resource Investment Optimization System
 ============================================
 
+.. image:: http://builds.naturalcapitalproject.org/buildStatus/icon?job=natcap.rios
+        :target: http://builds.naturalcapitalproject.org/view/Bitbucket%20builds/job/natcap.rios/
+
 About RIOS
 ==========
 
