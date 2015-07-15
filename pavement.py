@@ -32,7 +32,11 @@ setup(
     author_email="richpsharp@gmail.com",
     package_dir={'natcap': 'src/natcap'},
     namespace_packages=['natcap'],
-    install_requires=REQUIREMENTS
+    install_requires=REQUIREMENTS,
+    package_data={
+        'natcap.rios.iui': ['*.png', '*.json'],
+        'natcap.rios': ['report_style.css']
+    }
 )
 
 @paver.easy.task
