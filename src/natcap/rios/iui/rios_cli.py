@@ -3,6 +3,7 @@
 
 import sys
 import argparse
+import importlib
 
 import natcap.rios
 
@@ -23,14 +24,14 @@ def main():
         '--list', action='store_true', help='List available models')
     parser.add_argument(
         'model', nargs='?',
-        help='The model to run.  Use --list to show available models/tools.')
+        help='The model to run.')
 
     args = parser.parse_args()
 
     if args.list:
-        print 'Available models:'
+        print 'Available models'
         for model_name, model_description in MODEL_LIST.iteritems():
-            print model_name + ': ' + model_description
+            print '\t' + model_name + ': ' + model_description
         return
 
     if args.model not in MODEL_LIST:
@@ -39,13 +40,11 @@ def main():
             'models.' % args.model)
         return 1
 
-    if args.model == 'rios_ipa':
-        from natcap.rios.iui import rios_ipa
-        rios_ipa.launch_ui(sys.argv)
+    #Otherwise import the module and launch the ui
+    module = importlib.import_module('natcap.rios.iui.' + args.model)
+    print module
+    module.launch_ui(sys.argv)
 
-    if args.model == 'rios_porter':
-        from natcap.rios.iui import rios_porter
-        rios_porter.launch_ui(sys.argv)
 
 if __name__ == '__main__':
     main()
