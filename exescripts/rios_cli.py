@@ -12,6 +12,11 @@ MODEL_LIST = {
     'rios_porter': "RIOS Portfolio Translator"
     }
 
+def _print_models():
+    print 'Available models'
+    for model_name, model_description in MODEL_LIST.iteritems():
+        print '\t' + model_name + ': ' + model_description
+
 def main():
     """
     Single entry point for all RIOS UIs
@@ -30,18 +35,18 @@ def main():
 
     if args.list:
         print 'Available models'
-        for model_name, model_description in MODEL_LIST.iteritems():
-            print '\t' + model_name + ': ' + model_description
+        _print_models()
         return
 
     if args.model not in MODEL_LIST:
-        print (
-            'Error: "%s" not a known model. Use --list to show available '
-            'models.' % args.model)
-        return 1
+        print 'Error: "%s" not a known model.' % args.model
+        _print_models()
+        model = raw_input('Choose a model: ')
+    else:
+        model = args.model
 
     #Otherwise import the module and launch the ui
-    importlib.import_module('natcap.rios.iui.' + args.model).launch_ui(sys.argv)
+    importlib.import_module('natcap.rios.iui.' + model).launch_ui(sys.argv)
 
 
 if __name__ == '__main__':
