@@ -19,12 +19,8 @@
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
-
-; Set the compression size and type.
-;SetCompressor /FINAL /SOLID lzma
-;SetCompressorDictSize 64
-SetCompressor /SOLID zlib
-
+; Set the compression type.
+SetCompressor zlib
 
 ; MUI 1.67 compatible macro settings------
 ; Installer settings.

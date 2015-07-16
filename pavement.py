@@ -13,7 +13,7 @@ from paver.setuputils import setup
 import PyInstaller.main
 import natcap.versioner
 
-VERSION = natcap.versioner.vcs_version()
+VERSION = natcap.versioner.parse_version()
 
 REQUIREMENTS = [
     'numpy',
@@ -27,12 +27,17 @@ setup(
     name='natcap.rios',
     packages=paver.setuputils.find_packages('src'),
     version=VERSION,
+    natcap_version='src/natcap/rios/version.py',
     url="https://bitbucket.org/natcap/rios",
     author="Rich Sharp",
     author_email="richpsharp@gmail.com",
     package_dir={'natcap': 'src/natcap'},
     namespace_packages=['natcap'],
-    install_requires=REQUIREMENTS
+    install_requires=REQUIREMENTS,
+    package_data={
+        'natcap.rios.iui': ['*.png', '*.json'],
+        'natcap.rios': ['report_style.css']
+    }
 )
 
 @paver.easy.task

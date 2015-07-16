@@ -3,6 +3,7 @@ import glob
 import os
 import shutil
 
+import shapely #so we can get shapely's dll
 from PyInstaller.compat import is_win
 
 SCRIPTS = glob.glob('exescripts/*.py')
@@ -13,6 +14,7 @@ HIDDENIMPORTS = [
   'natcap.rios.rios',
   'natcap.rios.disk_sort',
   'natcap.versioner',
+  'natcap.rios.version',
   'multiprocessing',
   'multiprocessing.process',
   'multiprocessing.util',
@@ -60,8 +62,9 @@ for a, basename, basename_exe in analysis_object_tuples:
   exe = EXE(
     pyz,
     a.binaries + [
+        ('geos_c.dll', os.path.join(shapely.__path__[0], 'DLLs', 'geos_c.dll'), 'BINARY'),
         ('msvcp90.dll', 'C:\\Windows\\System32\\msvcp90.dll', 'BINARY'),
-        ('msvcr90.dll', 'C:\\Windows\\System32\\msvcr90.dll', 'BINARY')
+        ('msvcr90.dll', 'C:\\Windows\\System32\\msvcr90.dll', 'BINARY'),
     ] if is_win else a.binaries,
     a.scripts,
     name=basename_exe,
