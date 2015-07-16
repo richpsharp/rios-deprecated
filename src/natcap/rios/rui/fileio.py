@@ -10,7 +10,7 @@ import datetime
 
 from PyQt4 import QtCore
 
-from natcap.rios.iui.dbfpy import dbf
+from natcap.rios.rui.dbfpy import dbf
 
 def settings_folder():
     """Return the file location of the user's settings folder.  This folder
@@ -78,9 +78,9 @@ class LastRunHandler(JSONHandler):
 
 class ResourceManager(object):
     """ResourceManager reconciles overrides supplied by the user against the
-    default values saved to the internal iui_resources resource file.  It
+    default values saved to the internal rui_resources resource file.  It
     adheres to the ResourceInterface interface and will print messages to stdout
-    when defaulting to iui's internal resources."""
+    when defaulting to rui's internal resources."""
 
     def __init__(self, user_resource_dir=''):
         """Initialize the ResourceManager instance.
@@ -91,9 +91,9 @@ class ResourceManager(object):
 
             Returns nothing."""
         super(ResourceManager, self).__init__()
-        iui_dir = os.path.dirname(__file__)
-        iui_resource = os.path.abspath(os.path.join(iui_dir, 'iui_resources'))
-        self.defaults = ResourceHandler(iui_resource)
+        rui_dir = os.path.dirname(__file__)
+        rui_resource = os.path.abspath(os.path.join(rui_dir, 'rui_resources'))
+        self.defaults = ResourceHandler(rui_resource)
         self.user_resources = ResourceHandler(user_resource_dir)
 
         self.print_warnings = True
@@ -241,12 +241,12 @@ class AbstractTableHandler(object):
         """Set a mask for the table's self.fieldnames.  Any fieldnames that
             match regexp will have trim number of characters stripped off the
             front.
-            
+
             regexp=None - a python string or None.  If a python string, this
                 will be a regular expression.  If None, this represents no
                 regular expression.
             trim - a python int.
-            
+
             Returns nothing."""
 
         self.mask_regexp = regexp
@@ -303,7 +303,7 @@ class AbstractTableHandler(object):
 
     def get_table_dictionary(self, key_field):
         """Returns a python dictionary mapping a key value to all values in that
-            particular row dictionary (including the key field).  If duplicate 
+            particular row dictionary (including the key field).  If duplicate
             keys are found, the are overwritten in the output dictionary.
 
             key_field - a python string of the desired field value to be used as

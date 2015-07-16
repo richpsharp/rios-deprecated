@@ -15,8 +15,8 @@ except AttributeError:
     # For when we can't use API version 1
     QString = unicode
 
-import natcap.rios.iui
-import iui_validator
+import natcap.rios.rui
+import rui_validator
 import executor
 import registrar
 import fileio
@@ -24,9 +24,9 @@ import fileio
 #This is for something
 CMD_FOLDER = '.'
 INVEST_ROOT = './'
-IUI_DIR = os.path.dirname(os.path.abspath(__file__))
+RUI_DIR = os.path.dirname(os.path.abspath(__file__))
 ENCODING = sys.getfilesystemencoding()
-print('IUI_DIR: %s' % IUI_DIR)
+print('RUI_DIR: %s' % RUI_DIR)
 
 # This data object is intended to be a thread-safe way to interact with data
 # values that may be altered while our multi-threaded UI is running.
@@ -53,7 +53,7 @@ DATA = Data()  # common data is stored here, protected by thread-safe methods
 class DynamicElement(QtGui.QWidget):
     """Create an object containing the skeleton of most functionality in the
         UI Interpreter's related classes.  It is not invoked directly by other
-        IUI classes, but is instead used as a base class for almost all classes
+        RUI classes, but is instead used as a base class for almost all classes
         in the UI interpreter.  A diagram of this class heirarchy can be found
         at https://docs.google.com/drawings/d/13QZ6SsUwvoBPjvr0gf_X1X20sc35tLTr9oedX1vaUh8/edit
 
@@ -77,7 +77,7 @@ class DynamicElement(QtGui.QWidget):
         # Save a local logger instance with the logger name reflecting the class
         # we're in.
         try:
-            self.LOGGER = natcap.rios.iui.get_ui_logger('bw.%s.%s' %
+            self.LOGGER = natcap.rios.rui.get_ui_logger('bw.%s.%s' %
                 (self.__class__.__name__, attributes['id'][0:10]))
         except KeyError as e:
             print "cant' find ID %s %s" % (str(attributes), self.__class__.__name__)
@@ -437,7 +437,7 @@ class DynamicPrimitive(DynamicElement):
 
         if 'validateAs' in self.attributes:
             validator_type = self.attributes['validateAs']['type']
-            self.validator = iui_validator.Validator(validator_type)
+            self.validator = rui_validator.Validator(validator_type)
             self.timer = QtCore.QTimer()
         else:
             self.validator = None
@@ -613,7 +613,7 @@ class InformationButton(QtGui.QPushButton):
         self.body_text = body_text
         self.pressed.connect(self.show_info_popup)
         self.setFlat(True)
-        self.setIcon(QtGui.QIcon(os.path.join(IUI_DIR, 'info.png')))
+        self.setIcon(QtGui.QIcon(os.path.join(RUI_DIR, 'info.png')))
         self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 
         # If the user has set "helpText": null in JSON, deactivate.
@@ -694,7 +694,7 @@ class ErrorButton(InformationButton):
         if state == 'pass' or state == None:
             button_is_flat = True
 
-        self.setIcon(QtGui.QIcon(os.path.join(IUI_DIR, button_icon)))
+        self.setIcon(QtGui.QIcon(os.path.join(RUI_DIR, button_icon)))
         self.setFlat(button_is_flat)
         QtGui.QWidget.setEnabled(self, True)  # enable the button; validation has completed
 
@@ -796,7 +796,7 @@ class DynamicText(LabeledElement):
             QtGui.QLineEdit.__init__(self)
 
             self.button = QtGui.QToolButton(self)
-            self.button.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+            self.button.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
                 'validate-pass.png')))
             self.button.setStyleSheet('border: 0px; padding: 0px;')
             self.button.setVisible(False)
@@ -836,7 +836,7 @@ class DynamicText(LabeledElement):
             is requested before I show the menu."""
             menu = self.createStandardContextMenu()
             refresh_action = QtGui.QAction('Refresh', menu)
-            refresh_action.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+            refresh_action.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
                 'refresh.png')))
             refresh_action.triggered.connect(self.emit_textchanged)
             menu.addAction(refresh_action)
@@ -1045,13 +1045,13 @@ class Container(QtGui.QGroupBox, DynamicGroup):
             if 'style' in self.attributes:
                 if self.attributes['style'] == 'arrows':
                     self.setStyleSheet('QGroupBox::indicator:unchecked {' +
-                        'image: url(%s/dialog-yes-small.png);}'% IUI_DIR +
+                        'image: url(%s/dialog-yes-small.png);}'% RUI_DIR +
                         'QGroupBox::indicator:checked {' +
-                        'image: url(%s/dialog-no-small.png);}'% IUI_DIR +
+                        'image: url(%s/dialog-no-small.png);}'% RUI_DIR +
                         'QGroupBox::indicator:checked:pressed {' +
-                        'image: url(%s/dialog-no-small.png);}'% IUI_DIR +
+                        'image: url(%s/dialog-no-small.png);}'% RUI_DIR +
                         'QGroupBox::indicator:unchecked:pressed {' +
-                        'image: url(%s/dialog-yes-small.png);}'% IUI_DIR +
+                        'image: url(%s/dialog-yes-small.png);}'% RUI_DIR +
                         'QGroupBox::indicator {width: 12px; height: 12px;}')
 
         if 'enabled' in self.attributes:
@@ -1148,7 +1148,7 @@ class MultiElement(Container):
             self.row_num = row_num
             self.parent = parent
             self.pressed.connect(self.remove_element)
-            self.setIcon(QtGui.QIcon(os.path.join(IUI_DIR, 'list-remove.png')))
+            self.setIcon(QtGui.QIcon(os.path.join(RUI_DIR, 'list-remove.png')))
 
         def remove_element(self):
             """A callback that is triggered when the button is pressed."""
@@ -1455,7 +1455,7 @@ class FileButton(QtGui.QPushButton):
     def __init__(self, text, URIfield, filetype='file', filter='all'):
         super(FileButton, self).__init__()
         self.text = text
-        self.setIcon(QtGui.QIcon(os.path.join(IUI_DIR, 'document-open.png')))
+        self.setIcon(QtGui.QIcon(os.path.join(RUI_DIR, 'document-open.png')))
         self.URIfield = URIfield
         self.filetype = filetype
         self.filters = {"all": ["All files (* *.*)"],
@@ -1782,7 +1782,7 @@ class CheckBox(QtGui.QCheckBox, DynamicPrimitive):
 
 class TableHandler(Dropdown):
     """This class defines a general-purpose class for handling dropdown-based
-        column selection.  This class uses IUI's 'enabledBy' attribute to
+        column selection.  This class uses RUI's 'enabledBy' attribute to
         control the contents of the dropdown menu. This element's 'enabledBy'
         attribute must be set to the id of 0a file element that is validated
         appropriately."""
@@ -1884,7 +1884,7 @@ class OperationDialog(QtGui.QDialog):
         #set window attributes
         self.setLayout(QtGui.QVBoxLayout())
         self.setWindowTitle("Running the model")
-        self.resize(700, 400)
+        self.resize(1000, 400)
         center_window(self)
         self.setModal(True)
 
@@ -1897,7 +1897,7 @@ class OperationDialog(QtGui.QDialog):
         self.cursor = self.statusArea.textCursor()
 
         #set the background color of the statusArea widget to be white.
-        self.statusArea.setStyleSheet("QWidget { background-color: White }")
+        self.statusArea.setStyleSheet('QWidget { background-color: White; font-family: "courier" }')
 
         #create an indeterminate progress bar.  According to the Qt
         #documentation, an indeterminate progress bar is created when a
@@ -1925,9 +1925,9 @@ class OperationDialog(QtGui.QDialog):
 #        self.cancelButton = QtGui.QPushButton(' Cancel')
 
         #add button icons
-#        self.quitButton.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+#        self.quitButton.setIcon(QtGui.QIcon(os.path.join(rui_DIR,
 #            'dialog-close.png')))
-        self.backButton.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+        self.backButton.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
             'dialog-ok.png')))
 #        self.cancelButton.setIcon(QtGui.QIcon('dialog-cancel.png'))
 
@@ -2048,9 +2048,9 @@ class OperationDialog(QtGui.QDialog):
     def cancelled(self):
         return self.cancel
 
-class ElementAssembler(iui_validator.ValidationAssembler):
+class ElementAssembler(rui_validator.ValidationAssembler):
     def __init__(self, elements_ptr):
-        iui_validator.ValidationAssembler.__init__(self)
+        rui_validator.ValidationAssembler.__init__(self)
         self.elements = elements_ptr
 
     def _get_value(self, element_id):
@@ -2194,7 +2194,7 @@ class Tab(DynamicGroup):
 class Root(DynamicElement):
     def __init__(self, uri, layout, object_registrar):
         if not os.path.isfile(uri):
-            raise IOError("IUI json file not found: %s" % uri)
+            raise IOError("RUI json file not found: %s" % uri)
         self.config_loader = fileio.JSONHandler(uri)
         attributes = self.config_loader.get_attributes()
 
@@ -2438,7 +2438,7 @@ class Root(DynamicElement):
                             element_value)
 
         if self.attributes['include_meta'] is True:
-            outputDict['_iui_meta'] = {
+            outputDict['_rui_meta'] = {
                 'ui_state': self.get_element_state(),
                 'lastrun_uri': self.last_run_handler.uri,
             }
@@ -2604,7 +2604,7 @@ class ExecRoot(Root):
         Root.__init__(self, uri, layout, object_registrar)
 
         self.main_window.setWindowIcon(QtGui.QIcon(
-            os.path.join(IUI_DIR, 'natcap_logo.png')))
+            os.path.join(RUI_DIR, 'natcap_logo.png')))
 
         # Check to see if we should load the last run.  Defaults to false if the
         # user has not specified.
@@ -2659,7 +2659,7 @@ class ExecRoot(Root):
 
             if filename != '':
                 arguments = self.assembleOutputDict()
-                natcap.rios.iui.fileio.save_model_run_json(arguments, model, filename)
+                natcap.rios.rui.fileio.save_model_run_json(arguments, model, filename)
 
     def save_to_python(self):
         """Save the current state of the UI to a python file after checking that
@@ -2694,7 +2694,7 @@ class ExecRoot(Root):
 
             if filename != '':
                 arguments = self.assembleOutputDict()
-                natcap.rios.iui.fileio.save_model_run(arguments, model, filename)
+                natcap.rios.rui.fileio.save_model_run(arguments, model, filename)
 
     def find_element_ptr(self, element_id):
         """Return an element pointer if found.  None if not found."""
@@ -2896,7 +2896,7 @@ class ExecRoot(Root):
                         'from previous model run? %s' % str())
 
                     dialog.ok_button.setText('Run Model')
-                    dialog.ok_button.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+                    dialog.ok_button.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
                         'dialog-ok.png')))
                     exit_code = dialog.exec_()
                     # An exit code of 0 means go back.
@@ -2975,15 +2975,15 @@ class ExecRoot(Root):
             returns nothing."""
 
         self.runButton = QtGui.QPushButton(' Run')
-        self.runButton.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+        self.runButton.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
             'dialog-ok.png')))
 
         self.cancelButton = QtGui.QPushButton(' Quit')
-        self.cancelButton.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+        self.cancelButton.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
             'dialog-close.png')))
 
         self.resetButton = QtGui.QPushButton(' Reset')
-        self.resetButton.setIcon(QtGui.QIcon(os.path.join(IUI_DIR,
+        self.resetButton.setIcon(QtGui.QIcon(os.path.join(RUI_DIR,
             'edit-undo.png')))
 
         #create the buttonBox (a container for buttons)
@@ -3036,7 +3036,7 @@ class InfoDialog(QtGui.QDialog):
         self.layout().addWidget(self.button_box)
 
     def set_icon(self, uri):
-        self.icon.setPixmap(QtGui.QPixmap(os.path.join(IUI_DIR, uri)))
+        self.icon.setPixmap(QtGui.QPixmap(os.path.join(RUI_DIR, uri)))
 
     def set_title(self, title):
         self.title.setText(title)
