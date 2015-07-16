@@ -41,9 +41,7 @@ def main():
         return 1
 
     #Otherwise import the module and launch the ui
-    module = importlib.import_module('natcap.rios.iui.' + args.model)
-    print module
-    module.launch_ui(sys.argv)
+    importlib.import_module('natcap.rios.iui.' + args.model).launch_ui(sys.argv)
 
 
 if __name__ == '__main__':
