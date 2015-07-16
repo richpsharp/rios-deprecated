@@ -1,7 +1,6 @@
 # -*- mode: python -*-
 import glob
 import os
-import shutil
 
 import shapely #so we can get shapely's dll
 
