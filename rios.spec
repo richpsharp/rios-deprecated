@@ -4,36 +4,24 @@ import os
 import shutil
 
 import shapely #so we can get shapely's dll
-from PyInstaller.compat import is_win
-
-import natcap.versioner
 
 DEST_DIRECTORY = 'rios_dest'
 
 HIDDENIMPORTS = [
-  'natcap',
-  'natcap.versioner',
-  'natcap.rios',
-  'natcap.rios.rios',
-  'natcap.rios.disk_sort',
-  'natcap.rios.version',
-  'multiprocessing',
-  'multiprocessing.process',
-  'multiprocessing.util',
-  '_multiprocessing',
   'scipy.linalg.cython_blas',
   'scipy.linalg.cython_lapack',
-  'scipy.special._ufuncs',
   'scipy.special._ufuncs_cxx',
 ]
 
 SCRIPT = 'exescripts/rios_cli.py'
 
+CURRENT_DIR = os.path.join(os.getcwd(), os.path.dirname(sys.argv[1]))
+
 a = Analysis(
   [SCRIPT],
   pathex=[],
   hiddenimports=HIDDENIMPORTS,
-  hookspath=None,
+  hookspath=[os.path.join(CURRENT_DIR, 'exescripts', 'hooks')],
   runtime_hooks=None)
 
 for suffix in ['*.png', '*.json']:
@@ -60,7 +48,7 @@ exe = EXE(
   exclude_binaries=True,
   debug=False,
   strip=None,
-  upx=False,
+  upx=True,
   console=True,
   icon='installer/windows/RIOS-2-square.ico')
 
@@ -70,4 +58,4 @@ coll = COLLECT(
   *args,
   name=DEST_DIRECTORY,
   strip=None,
-  upx=False)
+  upx=True)
