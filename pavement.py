@@ -3,6 +3,7 @@
 import os
 import sys
 import subprocess
+import shutil
 
 from PIL import ImageFont
 from PIL import Image
@@ -40,6 +41,7 @@ setup(
     }
 )
 
+
 @paver.easy.task
 @paver.easy.needs('paver.setuputils.install')
 def make_frozen_exe():
@@ -48,10 +50,20 @@ def make_frozen_exe():
 
 
 @paver.easy.task
-@paver.easy.needs('make_frozen_exe')
+def make_arctools_archive():
+    """Wrapper to archive the ArcGIS toolbox scripts and put them in an
+        approprately named ZIP file."""
+    shutil.make_archive(
+        'installer/RIOS_%s_arcgis_preprocessor' % VERSION, 'zip',
+        'arcgis_preprocessor')
+
+
+@paver.easy.task
+@paver.easy.needs(['make_frozen_exe', 'make_arctools_archive'])
 @paver.easy.cmdopts([
     ('nsis_binary_path=', '-nsis_binary_path', 'Path for NSIS executable')
 ])
+
 def make_installer(options):
     """Command to build NSIS installer."""
     print options
