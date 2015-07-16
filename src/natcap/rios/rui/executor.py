@@ -18,9 +18,9 @@ import locale
 from importlib import import_module
 import ctypes
 
-import natcap.rios.iui
+import natcap.rios.rui
 
-LOGGER = natcap.rios.iui.get_ui_logger(None)
+LOGGER = natcap.rios.rui.get_ui_logger(None)
 ENCODING = sys.getfilesystemencoding()
 
 # If we're not on windows, python doesn't know what a
@@ -362,7 +362,7 @@ class Executor(threading.Thread):
         max_key_width = max(map(lambda x:len(x[0]), sorted_args))
         format_str = "%-" + str(max_key_width) + "s %s\n"
         for name, value in sorted_args:
-            if name == '_iui_meta':
+            if name == '_rui_meta':
                 continue  # skip over the meta tag if provided.
 
             self.write(format_str % (name, value))
@@ -576,7 +576,7 @@ class Executor(threading.Thread):
         try:
             LOGGER.info('Python architecture: %s', platform.architecture())
             LOGGER.info('Disk space remaining for workspace: %s', _get_free_space(args['workspace_dir']))
-            natcap.rios.iui.log_model(model_name, model_version)  # log model usage to ncp-dev
+            natcap.rios.rui.log_model(model_name, model_version)  # log model usage to ncp-dev
 
             LOGGER.info('Pointing temporary directory at the workspace at %s' % args['workspace_dir'])
             temporary_path = os.path.join(args['workspace_dir'], 'tmp')
@@ -607,12 +607,12 @@ class Executor(threading.Thread):
 #            args['_process_pool'] = process_pool
 
             # If we're including metadata, add per-run metadata here.
-            if '_iui_meta' in args:
+            if '_rui_meta' in args:
                 logfile_data = {
                     'uri': log_file_uri,
                     'timestamp': timestamp,
                 }
-                args['_iui_meta']['logfile'] = logfile_data
+                args['_rui_meta']['logfile'] = logfile_data
 
             model.execute(args)
         except Exception as e:

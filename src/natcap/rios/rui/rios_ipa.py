@@ -8,9 +8,9 @@ import re
 from PyQt4 import QtGui, QtCore
 
 import natcap.rios
-from natcap.rios.iui import base_widgets
-from natcap.rios.iui import iui_validator
-from natcap.rios.iui import fileio
+from natcap.rios.rui import base_widgets
+from natcap.rios.rui import rui_validator
+from natcap.rios.rui import fileio
 
 import pygeoprocessing.geoprocessing
 
