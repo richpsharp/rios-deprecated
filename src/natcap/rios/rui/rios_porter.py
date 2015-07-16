@@ -8,7 +8,7 @@ import json
 
 from PyQt4 import QtGui, QtCore
 
-import natcap.rios.iui
+import natcap.rios.rui
 
 try:
     QString = QtCore.QString
@@ -17,7 +17,7 @@ except AttributeError:
     QString = unicode
 
 import pygeoprocessing.geoprocessing
-from natcap.rios.iui import base_widgets
+from natcap.rios.rui import base_widgets
 from natcap.rios import porter_core
 import natcap.rios
 import rios_ipa
@@ -348,7 +348,7 @@ class RsatUI(base_widgets.ExecRoot):
 
             if filename != '':
                 arguments = self.get_ui_args()
-                invest_natcap.iui.fileio.save_model_run(arguments, model, filename)
+                invest_natcap.rui.fileio.save_model_run(arguments, model, filename)
 
     def queueOperations(self):
         ui_args = self.get_ui_args()

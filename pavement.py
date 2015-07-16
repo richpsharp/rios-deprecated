@@ -35,7 +35,7 @@ setup(
     namespace_packages=['natcap'],
     install_requires=REQUIREMENTS,
     package_data={
-        'natcap.rios.iui': ['*.png', '*.json'],
+        'natcap.rios.rui': ['*.png', '*.json'],
         'natcap.rios': ['report_style.css']
     }
 )

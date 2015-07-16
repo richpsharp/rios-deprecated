@@ -1,4 +1,4 @@
-"""This module provides validation functionality for the IUI package.  In a
+"""This module provides validation functionality for the rui package.  In a
 nutshell, this module will validate a value if given a dictionary that
 specifies how the value should be validated."""
 
@@ -23,10 +23,10 @@ import registrar
 
 def get_fields(feature):
     """Return a dict with all fields in the given feature.
-        
+
         feature - an OGR feature.
-        
-        Returns an assembled python dict with a mapping of 
+
+        Returns an assembled python dict with a mapping of
         fieldname -> fieldvalue"""
 
     fields = {}
@@ -41,7 +41,7 @@ def get_fields(feature):
 class Validator(registrar.Registrar):
     """Validator class contains a reference to an object's type-specific
         checker.
-        It is assumed that one single iui input element will have its own
+        It is assumed that one single rui input element will have its own
         validator.
 
         Validation can be performed at will and is performed in a new thread to
@@ -682,7 +682,7 @@ class OGRChecker(TableChecker):
                 if 'units' in layer_dict['projection']:
                     linear_units = str(reference.GetLinearUnitsName()).lower()
 
-                    # This dictionary maps IUI-defined projection strings to the
+                    # This dictionary maps rui-defined projection strings to the
                     # WKT unit name strings that OGR recognizes.
                     # Use a list of possible options to identify different
                     # spellings.
@@ -929,7 +929,7 @@ class PrimitiveChecker(Checker):
             # If the user has not provided a regular expression, we should use
             # the default regular expression instead.
             user_pattern = self.default_regexp
-        
+
         pattern = re.compile(user_pattern, flag)
         value = valid_dict['value']  # the value to compare against our regex
         if pattern.match(str(value)) == None:
@@ -1047,7 +1047,7 @@ class FlexibleTableChecker(TableChecker):
         except IOError as e:
             return str("IOError: %s" % str(e))
         except (csv.Error, ValueError) as e:
-            return str(e)            
+            return str(e)
 
     def _build_table(self):
         # Forward the call to the checker for the particular table type.
