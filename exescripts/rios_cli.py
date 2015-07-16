@@ -5,7 +5,6 @@ import sys
 import argparse
 import importlib
 
-import natcap.versioner
 import natcap.rios
 
 MODEL_LIST = {
