@@ -24,16 +24,6 @@ a = Analysis(
   hookspath=[os.path.join(CURRENT_DIR, 'exescripts', 'hooks')],
   runtime_hooks=None)
 
-for suffix in ['*.png', '*.json']:
-  a.datas += [
-    ((os.path.join('natcap/rios/iui', os.path.basename(x))),x,'DATA')
-    for x in glob.glob('src/natcap/rios/iui/' + suffix)]
-
-#pick up the report style sheet
-a.datas += [
-  ('natcap/rios/report_style.css',
-  'src/natcap/rios/report_style.css', 'DATA')]
-
 a.datas += [('.', 'installer/windows/RIOS-2-square.ico', 'DATA')]
 pyz = PYZ(a.pure)
 exe = EXE(
