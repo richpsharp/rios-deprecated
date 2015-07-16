@@ -44,7 +44,7 @@ setup(
 @paver.easy.needs('paver.setuputils.install')
 def make_frozen_exe():
     """Wrapper to call pyinstaller directly"""
-    PyInstaller.main.run(['rios.spec', '--noconfirm'])
+    PyInstaller.main.run(['rios.spec', '--noconfirm', '--debug'])
 
 
 @paver.easy.task
