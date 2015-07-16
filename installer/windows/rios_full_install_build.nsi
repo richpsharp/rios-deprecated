@@ -143,8 +143,8 @@ Section "Install" SEC01
   !define RIOS_ICON "$INSTDIR\RIOS-2-square.ico"
 
   CreateDirectory "${SMPATH}"
-  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (1) Investment Portfolio Adviser.lnk" "$INSTDIR\rios_ipa.exe" "" ${RIOS_ICON}
-  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (2) Portfolio Translator.lnk" "$INSTDIR\rios_porter.exe" "" ${RIOS_ICON}
+  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (1) Investment Portfolio Adviser.lnk" "$INSTDIR\rios_cli.exe" "rios_ipa" ${RIOS_ICON}
+  CreateShortCut "${SMPATH}\${PRODUCT_NAME} (2) Portfolio Translator.lnk" "$INSTDIR\rios_cli.exe" "rios_porter" ${RIOS_ICON}
 
   ; Write registry keys for convenient uninstallation via add/remove programs.
   ; Inspired by the example at

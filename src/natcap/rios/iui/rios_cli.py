@@ -5,8 +5,6 @@ import sys
 import argparse
 
 import natcap.rios
-import natcap.rios.iui.rios_ipa
-import natcap.rios.iui.rios_porter
 
 MODEL_LIST = {
     'rios_ipa': "RIOS Investment Portfolio Adviser",
@@ -42,10 +40,12 @@ def main():
         return 1
 
     if args.model == 'rios_ipa':
-        natcap.rios.iui.rios_ipa.launch_ui(sys.argv)
+        from natcap.rios.iui import rios_ipa
+        rios_ipa.launch_ui(sys.argv)
 
     if args.model == 'rios_porter':
-        natcap.rios.iui.rios_porter.launch_ui(sys.argv)
+        from natcap.rios.iui import rios_porter
+        rios_porter.launch_ui(sys.argv)
 
 if __name__ == '__main__':
     main()
