@@ -15,6 +15,7 @@ import PyInstaller.main
 import natcap.versioner
 
 VERSION = natcap.versioner.parse_version()
+TARGET_FOLDER = './target'
 
 REQUIREMENTS = [
     'numpy',
@@ -72,14 +73,15 @@ def make_arctools_archive():
     """Wrapper to archive the ArcGIS toolbox scripts and put them in an
         approprately named ZIP file."""
     shutil.make_archive(
-        'installer/rios_%s_arcgis_preprocessor' % VERSION, 'zip',
-        'arcgis_preprocessor')
+        os.path.join(TARGET_FOLDER, 'rios_%s_arcgis_preprocessor' % VERSION),
+        'zip', 'arcgis_preprocessor')
 
 @paver.easy.task
 def make_sample_data_archive():
     """Wrapper to clone and update the RIOS sample data and put in an
         approprately named ZIP file."""
-    rios_sample_data_folder = "installer/rios_sample_data_%s" % VERSION
+    rios_sample_data_folder = os.path.join(
+        TARGET_FOLDER, "rios_sample_data_%s" % VERSION)
     subprocess.call(
         "svn co svn://scm.naturalcapitalproject.org/svn/rios-data rios-data")
     print 'copy to %s' % rios_sample_data_folder
@@ -91,6 +93,7 @@ def make_sample_data_archive():
     print 'build archive %s.zip' % rios_sample_data_folder
     shutil.make_archive(
         rios_sample_data_folder, 'zip', rios_sample_data_folder)
+    shutil.rmtree(rios_sample_data_folder)
 
 
 @paver.easy.task
@@ -102,15 +105,19 @@ def make_sample_data_archive():
 
 def make_installer(options):
     """Command to build NSIS installer."""
-    print options
-    nsis_binary_path = options['nsis_binary_path']
+    try:
+        nsis_binary_path = options['nsis_binary_path']
+    except KeyError:
+        #do some kind of default because I keep forgetting to do this by hand
+        nsis_binary_path = "C:/Program Files (x86)/NSIS/makensis.exe"
+
     # Build the installer's splash screen based on the RIOS version no.
     _write_splash_screen(
         'installer/windows/RIOS_splash.jpg',
         'installer/windows/Ubuntu-R.ttf', VERSION,
         'installer/windows/RIOS_splash_v.jpg')
 
-    rios_dist_dir = os.path.join('dist', 'rios_dest')
+    rios_dist_dir = os.path.join('..', '..', 'dist', 'rios_dest')
 
     if not os.path.exists(nsis_binary_path):
         print str('ERROR: "%s" does not exist.' % nsis_binary_path)
@@ -122,6 +129,8 @@ def make_installer(options):
     command = ['/DVERSION=%s' % version,
                '/DDIST_FOLDER=%s' % rios_dist_dir,
                '/DARCHITECTURE=x86',
+               '/DOUT_FOLDER=%s' % os.path.join('../../', TARGET_FOLDER),
+               '/DLICENSE_FILE=%s' % "../../LICENSE.txt",
                'installer/windows/rios_full_install_build.nsi']
 
     subprocess.call([nsis_binary_path] + command)
