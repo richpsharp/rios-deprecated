@@ -1,8 +1,10 @@
-RIOS: Resource Investment Optimization System
-============================================
+.. default-role:: code
 
-.. image:: http://builds.naturalcapitalproject.org/buildStatus/icon?job=natcap.rios
-        :target: http://builds.naturalcapitalproject.org/view/Bitbucket%20builds/job/natcap.rios/
+RIOS: Resource Investment Optimization System |build_image|
+===========================================================
+
+.. |build_image| image:: http://builds.naturalcapitalproject.org/buildStatus/icon?job=natcap.rios
+  :target: http://builds.naturalcapitalproject.org/view/Bitbucket%20builds/job/natcap.rios/
 
 About RIOS
 ==========
@@ -45,4 +47,8 @@ Questions RIOS can answer
 RIOS Dependencies
 ===================
 RIOS relies on the following python packages:
-  * [RICH UPDATE THIS]
+  * numpy
+  * scipy>=0.13.0
+  * gdal
+  * pygeoprocessing>=0.3.0a3
+  * pyqt4
