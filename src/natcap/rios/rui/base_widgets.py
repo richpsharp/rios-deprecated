@@ -727,6 +727,7 @@ class LabeledElement(DynamicPrimitive):
     def __init__(self, attributes):
         DynamicPrimitive.__init__(self, attributes)
         self.label = QtGui.QLabel(attributes['label'])
+        self.label.setOpenExternalLinks(True)
         self.elements = [self.error_button, self.label, self.info_button]
 
     def addElement(self, element):
@@ -775,6 +776,7 @@ class Label(QtGui.QLabel, StaticReturn):
         self.setText(attributes['label'])
         self.setTextFormat(QtCore.Qt.RichText)
         self.setWordWrap(True)
+        self.setOpenExternalLinks(True)
         self.elements = [self.error_button, self, self.info_button]
 
 class DynamicText(LabeledElement):
