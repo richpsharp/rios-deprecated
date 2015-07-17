@@ -3,6 +3,7 @@ import glob
 import os
 
 import shapely #so we can get shapely's dll
+import natcap.rios #so we can get the version
 
 DEST_DIRECTORY = 'rios_dest'
 
@@ -33,7 +34,7 @@ exe = EXE(
       ('msvcr90.dll', 'C:\\Windows\\System32\\msvcr90.dll', 'BINARY'),
   ] if is_win else a.binaries,
   a.scripts,
-  name='rios_cli.exe',
+  name='rios_cli_%s.exe' % natcap.rios.__version__,
   exclude_binaries=True,
   debug=False,
   strip=None,
