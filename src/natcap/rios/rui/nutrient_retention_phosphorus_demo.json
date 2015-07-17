@@ -13,11 +13,6 @@
 	    "returns": "rios_tier_0"
 	},
         {
-            "id": "preprocessing_scripts",
-            "type": "label",
-            "label": "If needed, this module's raster inputs can be generated from the ArcGIS-based preprocessing scripts <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
-        },
-        {
             "id": "nutrient_retention_text",
             "type": "label",
             "label": "\nUpload your data for each factor listed below using the raster location boxes. Default transition weights in the table give equal weight to each of the four processes regulating the service (upslope source, on-pixel source, on-pixel retention, downslope retention). You can edit the weights, using values between 0 and 1, to change the importance of each factor.\n\n"
@@ -80,6 +75,11 @@
                     "defaultValue": [ 1, 1, 1, 1, 1, 1, 1]
                 }
             ]
+        },
+        {
+            "id": "preprocessing_scripts",
+            "type": "label",
+            "label": "If needed, the raster inputs required below can be generated from the ArcGIS-based preprocessing scripts <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
         },
         {
             "id": "rios_model_type",
