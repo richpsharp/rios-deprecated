@@ -24,11 +24,17 @@ REQUIREMENTS = [
     'pyqt4',
     ]
 
+README = open('README.rst').read()
+HISTORY = open('HISTORY.rst').read().replace('.. :changelog:', '')
+LICENSE = open('LICENSE.txt').read()
+
 setup(
     name='natcap.rios',
     packages=paver.setuputils.find_packages('src'),
     version=VERSION,
     natcap_version='src/natcap/rios/version.py',
+    long_description=README + '\n\n' + HISTORY,
+    license=LICENSE,
     url="https://bitbucket.org/natcap/rios",
     author="Rich Sharp",
     author_email="richpsharp@gmail.com",
@@ -38,7 +44,19 @@ setup(
     package_data={
         'natcap.rios.rui': ['*.png', '*.json'],
         'natcap.rios': ['report_style.css']
-    }
+    },
+    keywords='RIOS',
+    classifiers=[
+        'Intended Audience :: Developers',
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Science/Research',
+        'Natural Language :: English',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft',
+        'Operating System :: POSIX',
+        'Programming Language :: Python :: 2 :: Only',
+        'Topic :: Scientific/Engineering :: GIS'
+    ],
 )
 
 
