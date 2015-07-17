@@ -70,15 +70,11 @@ class ModelUI(base_widgets.ExecRoot):
         self.addLinks()
 
     def addLinks(self):
+        LOGGER.debug("adding links")
         links = []
-        try:
-            import natcap.invest
-            from natcap.invest import build_utils
-            architecture = build_utils.invest_version(attribute='py_arch')
-            links.append('InVEST Version %s (%s)' % (natcap.invest.__version__,
-                architecture))
-        except AttributeError:
-            links.append('InVEST Version UNKNOWN')
+        import natcap.rios
+        links.append('RIOS Version %s (%s)' % (natcap.rios.__version__,
+            architecture))
 
         try:
             doc_uri = 'file:///' + os.path.abspath(self.attributes['localDocURI'])

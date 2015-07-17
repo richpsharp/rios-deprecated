@@ -48,13 +48,34 @@ class WaterFundsUI(base_widgets.ExecRoot):
         rios_version = natcap.rios.__version__
 
         registrar = WaterFundsRegistrar(self)
-        base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
+
+        version_help_label = QtGui.QLabel()
+        version_help_label.setOpenExternalLinks(True)
+        version_help_label.setAlignment(QtCore.Qt.AlignRight)
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(version_help_label)
+
+        base_widgets.ExecRoot.__init__(self, uri, layout,
                 registrar, main_window, rios_version)
 
-        window_title = "%s | version %s" % (
-            self.attributes['label'], rios_version)
+        main_window.setWindowTitle(self.attributes['label'])
 
-        main_window.setWindowTitle(window_title)
+        links = []
+        links.append('RIOS Version %s ' % (natcap.rios.__version__))
+
+        try:
+            doc_uri = 'file:///' + os.path.abspath(self.attributes['localDocURI'])
+            links.append('<a href=\"%s\">Model documentation</a>' % doc_uri)
+        except KeyError:
+            # Thrown if attributes['localDocURI'] is not present
+            print 'Attribute localDocURI not found for this model; skipping.'
+
+        feedback_uri = 'http://forums.naturalcapitalproject.org/'
+        links.append('<a href=\"%s\">Report an issue</a>' % feedback_uri)
+
+        version_help_label.setText(' | '.join(links))
+
+
         self.okpressed = False
         self.show()
 
