@@ -46,7 +46,6 @@ class WaterFundsUI(base_widgets.ExecRoot):
     def __init__(self, uri, main_window):
 
         rios_version = natcap.rios.__version__
-
         registrar = WaterFundsRegistrar(self)
 
         version_help_label = QtGui.QLabel()
@@ -55,26 +54,21 @@ class WaterFundsUI(base_widgets.ExecRoot):
         layout = QtGui.QVBoxLayout()
         layout.addWidget(version_help_label)
 
-        base_widgets.ExecRoot.__init__(self, uri, layout,
-                registrar, main_window, rios_version)
+        base_widgets.ExecRoot.__init__(
+            self, uri, layout, registrar, main_window, rios_version)
 
         main_window.setWindowTitle(self.attributes['label'])
 
         links = []
         links.append('RIOS Version %s ' % (natcap.rios.__version__))
 
-        try:
-            doc_uri = 'file:///' + os.path.abspath(self.attributes['localDocURI'])
-            links.append('<a href=\"%s\">Model documentation</a>' % doc_uri)
-        except KeyError:
-            # Thrown if attributes['localDocURI'] is not present
-            print 'Attribute localDocURI not found for this model; skipping.'
+        doc_uri = 'http://data.naturalcapitalproject.org/rios_releases/rios_user_guide_%s.pdf' % natcap.rios.__version__
+        links.append('<a href=\"%s\">Model documentation</a>' % doc_uri)
 
         feedback_uri = 'http://forums.naturalcapitalproject.org/'
         links.append('<a href=\"%s\">Report an issue</a>' % feedback_uri)
 
         version_help_label.setText(' | '.join(links))
-
 
         self.okpressed = False
         self.show()
