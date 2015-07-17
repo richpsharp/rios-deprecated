@@ -57,9 +57,27 @@ def make_arctools_archive():
         'installer/RIOS_%s_arcgis_preprocessor' % VERSION, 'zip',
         'arcgis_preprocessor')
 
+@paver.easy.task
+def make_sample_data_archive():
+    """Wrapper to clone and update the RIOS sample data and put in an
+        approprately named ZIP file."""
+    rios_sample_data_folder = "installer/rios_sample_data_%s" % VERSION
+    subprocess.call(
+        "svn co svn://scm.naturalcapitalproject.org/svn/rios-data rios-data")
+    print 'copy to %s' % rios_sample_data_folder
+    if os.path.exists(rios_sample_data_folder):
+        shutil.rmtree(rios_sample_data_folder)
+    shutil.copytree(
+        'rios-data', rios_sample_data_folder,
+        ignore=shutil.ignore_patterns("*.svn*"))
+    print 'build archive %s.zip' % rios_sample_data_folder
+    shutil.make_archive(
+        rios_sample_data_folder, 'zip', rios_sample_data_folder)
+
 
 @paver.easy.task
-@paver.easy.needs(['make_frozen_exe', 'make_arctools_archive'])
+@paver.easy.needs([
+    'make_frozen_exe', 'make_arctools_archive', 'make_sample_data_archive'])
 @paver.easy.cmdopts([
     ('nsis_binary_path=', '-nsis_binary_path', 'Path for NSIS executable')
 ])
