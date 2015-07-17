@@ -29,7 +29,7 @@ SetCompressor zlib
 !include "x64.nsh"
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\..\LICENSE.txt"
+!insertmacro MUI_PAGE_LICENSE ${LICENSE_FILE}
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -49,7 +49,7 @@ SetCompressor zlib
 
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "..\rios_${VERSION}_${ARCHITECTURE}_Setup.exe"
+OutFile "${OUT_FOLDER}\rios_${VERSION}_${ARCHITECTURE}_setup.exe"
 InstallDir "C:\Program Files\RIOS ${PRODUCT_VERSION}"
 ShowInstDetails show
 
@@ -136,7 +136,7 @@ Section "Install" SEC01
   writeUninstaller "$INSTDIR\${UNINSTALL_PATH}.exe"
 
   ; Desired files are up one directory and in the timestamped RIOS folder.
-  File /r "..\..\${PRODUCT_BUILD_FOLDER}\*"
+  File /r "${PRODUCT_BUILD_FOLDER}\*"
 
   ; Create start  menu shortcuts.
   !define SMPATH "$SMPROGRAMS\${PRODUCT_NAME} ${PRODUCT_VERSION}"
