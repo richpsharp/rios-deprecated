@@ -285,8 +285,8 @@ class RsatUI(base_widgets.ExecRoot):
         main_window.setWindowTitle(self.attributes['label'])
         links = []
         links.append('RIOS version %s ' % (natcap.rios.__version__))
-        doc_uri = 'http://data.naturalcapitalproject.org/rios_releases/rios_user_guide_latest.pdf'
-        links.append('<a href=\"%s\">Model documentation</a>' % doc_uri)
+        doc_uri = 'http://www.naturalcapitalproject.org/rios_download.html'
+        links.append('<a href=\"%s\">Download model documentation</a>' % doc_uri)
         feedback_uri = 'http://forums.naturalcapitalproject.org/'
         links.append('<a href=\"%s\">Report an issue</a>' % feedback_uri)
         version_help_label.setText(' | '.join(links))
