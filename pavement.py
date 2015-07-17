@@ -54,7 +54,7 @@ def make_arctools_archive():
     """Wrapper to archive the ArcGIS toolbox scripts and put them in an
         approprately named ZIP file."""
     shutil.make_archive(
-        'installer/RIOS_%s_arcgis_preprocessor' % VERSION, 'zip',
+        'installer/rios_%s_arcgis_preprocessor' % VERSION, 'zip',
         'arcgis_preprocessor')
 
 @paver.easy.task

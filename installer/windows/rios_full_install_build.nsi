@@ -49,7 +49,7 @@ SetCompressor zlib
 
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "..\RIOS_${VERSION}_${ARCHITECTURE}_Setup.exe"
+OutFile "..\rios_${VERSION}_${ARCHITECTURE}_Setup.exe"
 InstallDir "C:\Program Files\RIOS ${PRODUCT_VERSION}"
 ShowInstDetails show
 
