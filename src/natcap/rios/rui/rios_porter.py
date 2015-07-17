@@ -273,14 +273,24 @@ class RsatUI(base_widgets.ExecRoot):
 
         registrar = RsatRegistrar(self)
 
-        base_widgets.ExecRoot.__init__(self, uri, QtGui.QVBoxLayout(),
-                                       registrar, main_window)
+        version_help_label = QtGui.QLabel()
+        version_help_label.setOpenExternalLinks(True)
+        version_help_label.setAlignment(QtCore.Qt.AlignRight)
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(version_help_label)
 
-        rios_version = natcap.rios.__version__
-        window_title = "%s | version %s" % (
-            self.attributes['label'], rios_version)
+        base_widgets.ExecRoot.__init__(
+            self, uri, layout, registrar, main_window, natcap.rios.__version__)
 
-        main_window.setWindowTitle(window_title)
+        main_window.setWindowTitle(self.attributes['label'])
+        links = []
+        links.append('RIOS version %s ' % (natcap.rios.__version__))
+        doc_uri = 'http://data.naturalcapitalproject.org/rios_releases/rios_user_guide_latest.pdf'
+        links.append('<a href=\"%s\">Model documentation</a>' % doc_uri)
+        feedback_uri = 'http://forums.naturalcapitalproject.org/'
+        links.append('<a href=\"%s\">Report an issue</a>' % feedback_uri)
+        version_help_label.setText(' | '.join(links))
+
 
         self.workspace_loaded = False
         self.okpressed = False

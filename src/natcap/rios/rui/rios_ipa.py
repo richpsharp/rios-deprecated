@@ -45,7 +45,6 @@ class WaterFundsRegistrar(base_widgets.ElementRegistrar):
 class WaterFundsUI(base_widgets.ExecRoot):
     def __init__(self, uri, main_window):
 
-        rios_version = natcap.rios.__version__
         registrar = WaterFundsRegistrar(self)
 
         version_help_label = QtGui.QLabel()
@@ -55,12 +54,12 @@ class WaterFundsUI(base_widgets.ExecRoot):
         layout.addWidget(version_help_label)
 
         base_widgets.ExecRoot.__init__(
-            self, uri, layout, registrar, main_window, rios_version)
+            self, uri, layout, registrar, main_window, natcap.rios.__version__)
 
         main_window.setWindowTitle(self.attributes['label'])
         links = []
-        links.append('RIOS Version %s ' % (natcap.rios.__version__))
-        doc_uri = 'http://data.naturalcapitalproject.org/rios_releases/rios_user_guide_%s.pdf' % natcap.rios.__version__
+        links.append('RIOS version %s ' % (natcap.rios.__version__))
+        doc_uri = 'http://data.naturalcapitalproject.org/rios_releases/rios_user_guide_latest.pdf'
         links.append('<a href=\"%s\">Model documentation</a>' % doc_uri)
         feedback_uri = 'http://forums.naturalcapitalproject.org/'
         links.append('<a href=\"%s\">Report an issue</a>' % feedback_uri)
