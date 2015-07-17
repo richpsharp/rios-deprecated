@@ -34,6 +34,7 @@ setup(
     packages=paver.setuputils.find_packages('src'),
     version=VERSION,
     natcap_version='src/natcap/rios/version.py',
+    description="Resource Investment Optimization System",
     long_description=README + '\n\n' + HISTORY,
     license=LICENSE,
     url="https://bitbucket.org/natcap/rios",
