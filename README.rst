@@ -6,10 +6,7 @@ RIOS: Resource Investment Optimization System |build_image|
 .. |build_image| image:: http://builds.naturalcapitalproject.org/buildStatus/icon?job=natcap.rios
   :target: http://builds.naturalcapitalproject.org/view/Bitbucket%20builds/job/natcap.rios/
 
- **This repository is for RIOS 1.1.4 and later**
-
-    This replaces our Google Code project formerly
-    located at http://code.google.com/p/invest-natcap.water-funds.
+This repository is for RIOS 1.1.4 and later which replaces our Google Code project formerly located at http://code.google.com/p/invest-natcap.water-funds.
 
 About RIOS
 ==========
