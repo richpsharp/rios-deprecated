@@ -1,8 +1,13 @@
 Release History
 ===============
 
-1.1.4
------
+1.1.5 (2015/07/17)
+------------------
+
+* Hotfix to rearrange references to RIOS Preprocessing tools on select RIOS IPA objective models.
+
+1.1.4 (2015/07/17)
+------------------
 
 Previous releases of InVEST were from a Google Code site but was migrated in June 2015.  This is the first release of RIOS in less than ad hoc project structure.
 
