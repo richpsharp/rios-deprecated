@@ -78,84 +78,10 @@
             ]
         },
         {
-            "id": "preprocessing_scripts",
-            "type": "label",
-            "label": "If needed, the raster inputs required below can be generated from the ArcGIS-based preprocessing scripts <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
-        },
-        {
             "id": "rios_model_type",
             "type": "hiddenElement",
             "args_id": "rios_model_type",
             "returns": "rios_tier_0"
-        },
-        {
-            "id":"downslopeRetentionIndexGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Downslope retention index",
-            "elements": [
-                {
-                    "id": "downslopeRasterList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "downslopeRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "downslopeRetentionIndexGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "", "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "downslopeBin",
-                            "type": "linearInterpolatedBin",
-			    "inverted": true,
-                            "args_id": ["factors",
-                                        {"inheritFrom": "downslopeRetentionIndexGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id":"upslopeGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Upslope source",
-            "elements": [
-                {
-                    "id": "upslopeRasterList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "upslopeRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "upslopeGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "", "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "upslopeBin",
-                            "type": "linearInterpolatedBin",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "upslopeGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
         },
         {
             "id":"rainfallDepthGroup",
@@ -254,6 +180,142 @@
             ]
         },
         {
+            "id":"lulcRetentionFloodGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Land Use Land Cover Retention at pixel",
+            "elements": [
+                {
+                    "id": "lulcRetentionFloodRasterList",
+                    "type": "list",
+                    "elements": [
+			{
+			    "id": "onPixelSourceKey",
+			    "type": "label",
+			    "label": "Maps to 'Rough_Rank' in LULC Biophysical Coefficients table.",
+			    "args_id": ["factors",
+                                        {"inheritFrom": "lulcRetentionFloodGroup",
+                                         "useAttribute": "label"},
+                                         "bins"],
+			    "returns": {"uri": "general_lulc_coefficients.csv",
+                                        "key_field": "lulc_general",
+					"value_field": "Rough_Rank",
+					"raster_uri": "/general_lulc.tif"}
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"beneficiariesGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Beneficiaries",
+            "elements": [
+                {
+                    "id": "beneficiariesRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "beneficiariesRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "beneficiariesBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "preprocessing_scripts",
+            "type": "label",
+            "label": "If needed, the raster inputs required below can be generated from the RIOS Preprocesing Toolkit <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
+        },
+        {
+            "id":"downslopeRetentionIndexGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Downslope retention index",
+            "elements": [
+                {
+                    "id": "downslopeRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "downslopeRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "downslopeRetentionIndexGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "downslopeBin",
+                            "type": "linearInterpolatedBin",
+                "inverted": true,
+                            "args_id": ["factors",
+                                        {"inheritFrom": "downslopeRetentionIndexGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"upslopeGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Upslope source",
+            "elements": [
+                {
+                    "id": "upslopeRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "upslopeRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "upslopeGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "upslopeBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "upslopeGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "id":"slopeIndexGroup",
             "type": "container",
             "collapsible": false,
@@ -288,34 +350,6 @@
             ]
         },
         {
-            "id":"lulcRetentionFloodGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Land Use Land Cover Retention at pixel",
-            "elements": [
-                {
-                    "id": "lulcRetentionFloodRasterList",
-                    "type": "list",
-                    "elements": [
-			{
-			    "id": "onPixelSourceKey",
-			    "type": "label",
-			    "label": "Maps to 'Rough_Rank' in LULC Biophysical Coefficients table.",
-			    "args_id": ["factors",
-                                        {"inheritFrom": "lulcRetentionFloodGroup",
-                                         "useAttribute": "label"},
-                                         "bins"],
-			    "returns": {"uri": "general_lulc_coefficients.csv",
-                                        "key_field": "lulc_general",
-					"value_field": "Rough_Rank",
-					"raster_uri": "/general_lulc.tif"}
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "id":"riparianCommunityGroup",
             "type": "container",
             "collapsible": false,
@@ -342,40 +376,6 @@
                             "type": "linearInterpolatedBin",
                             "args_id": ["factors",
                                         {"inheritFrom": "riparianCommunityGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id":"beneficiariesGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Beneficiaries",
-            "elements": [
-                {
-                    "id": "beneficiariesRasterList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "beneficiariesRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "beneficiariesGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "", "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "beneficiariesBin",
-                            "type": "linearInterpolatedBin",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "beneficiariesGroup",
                                          "useAttribute": "label"},
                                          "bins"]
                         }
