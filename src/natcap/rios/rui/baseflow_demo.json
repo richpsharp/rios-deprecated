@@ -220,40 +220,6 @@
             ]
         },
         {
-            "id":"slopeIndexGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Slope Index",
-            "elements": [
-                {
-                    "id": "slopeIndexList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "slopeIndexRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "slopeIndexGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "", "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "slopeIndexBin",
-                            "type": "linearInterpolatedBin",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "slopeIndexGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "id":"lulcRetentionGroup",
             "type": "container",
             "collapsible": false,
@@ -316,6 +282,45 @@
             ]
         },
         {
+            "id":"beneficiariesGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Beneficiaries",
+            "elements": [
+                {
+                    "id": "beneficiariesRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "beneficiariesRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "beneficiariesBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "preprocessing_scripts",
+            "type": "label",
+            "label": "If needed, the raster inputs required below can be generated from the RIOS Preprocesing Toolkit <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
+        },
+        {
             "id":"downslopeRetentionIndexGroup",
             "type": "container",
             "collapsible": false,
@@ -340,7 +345,7 @@
                         {
                             "id": "downslopeBin",
                             "type": "linearInterpolatedBin",
-			    "inverted": true,
+                "inverted": true,
                             "args_id": ["factors",
                                         {"inheritFrom": "downslopeRetentionIndexGroup",
                                          "useAttribute": "label"},
@@ -385,21 +390,21 @@
             ]
         },
         {
-            "id":"beneficiariesGroup",
+            "id":"slopeIndexGroup",
             "type": "container",
             "collapsible": false,
             "defaultValue": false,
-            "label": "Beneficiaries",
+            "label": "Slope Index",
             "elements": [
                 {
-                    "id": "beneficiariesRasterList",
+                    "id": "slopeIndexList",
                     "type": "list",
                     "elements": [
                         {
-                            "id": "beneficiariesRaster",
+                            "id": "slopeIndexRaster",
                             "type": "file",
                             "args_id": ["factors",
-                                        {"inheritFrom": "beneficiariesGroup",
+                                        {"inheritFrom": "slopeIndexGroup",
                                          "useAttribute": "label"},
                                         "raster_uri"],
                             "label": "Raster location",
@@ -407,10 +412,10 @@
                             "validateAs": {"type": "GDAL"}
                         },
                         {
-                            "id": "beneficiariesBin",
+                            "id": "slopeIndexBin",
                             "type": "linearInterpolatedBin",
                             "args_id": ["factors",
-                                        {"inheritFrom": "beneficiariesGroup",
+                                        {"inheritFrom": "slopeIndexGroup",
                                          "useAttribute": "label"},
                                          "bins"]
                         }
