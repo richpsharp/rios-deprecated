@@ -14,10 +14,10 @@ from natcap.rios.rui import fileio
 
 import pygeoprocessing.geoprocessing
 
-logging.basicConfig(format='%(asctime)s %(name)-20s %(levelname)-8s \
+logging.basicConfig(format='%(asctime)s %(name)-5s %(levelname)-5s \
 %(message)s', level=logging.DEBUG, datefmt='%m/%d/%Y %H:%M:%S ')
 
-LOGGER = logging.getLogger('rios_ipa')
+LOGGER = logging.getLogger('natcap.rios.rios_ipa')
 
 
 class WaterFundsRegistrar(base_widgets.ElementRegistrar):

@@ -20,13 +20,13 @@ import pygeoprocessing.geoprocessing
 from natcap.rios.rui import base_widgets
 from natcap.rios import porter_core
 import natcap.rios
-import rios_ipa
+from natcap.rios import rios_ipa
 
 logging.basicConfig(
-    format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s',
+    format='%(asctime)s %(name)-5s %(levelname)-5s %(message)s',
     level=logging.DEBUG, datefmt='%m/%d/%Y %H:%M:%S ')
 
-LOGGER = logging.getLogger('rios_porter')
+LOGGER = logging.getLogger('natcap.rios.rios_porter')
 
 #This is bad state variable that I need to use to determine if the rios
 #workspace has been loaded or not

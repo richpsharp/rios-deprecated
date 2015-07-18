@@ -77,84 +77,10 @@
             ]
         },
         {
-            "id": "preprocessing_scripts",
-            "type": "label",
-            "label": "If needed, the raster inputs required below can be generated from the ArcGIS-based preprocessing scripts <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
-        },
-        {
             "id": "rios_model_type",
             "type": "hiddenElement",
             "args_id": "rios_model_type",
             "returns": "rios_tier_0"
-        },
-        {
-            "id":"downslopeRetentionIndexGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Downslope retention index",
-            "elements": [
-                {
-                    "id": "downslopeRasterList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "downslopeRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "downslopeRetentionIndexGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "",
-                            "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "downslopeBin",
-                            "type": "linearInterpolatedBin",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "downslopeRetentionIndexGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id":"upslopeGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Upslope source",
-            "elements": [
-                {
-                    "id": "upslopeRasterList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "upslopeRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "upslopeGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "", "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "upslopeBin",
-                            "type": "linearInterpolatedBin",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "upslopeGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
         },
         {
             "id":"onPixelRetentionGroup",
@@ -319,41 +245,6 @@
             ]
         },
         {
-            "id":"riparianCommunityGroup",
-            "type": "container",
-            "collapsible": false,
-            "defaultValue": false,
-            "label": "Riparian continuity",
-            "elements": [
-                {
-                    "id": "riparianCommunityRasterList",
-                    "type": "list",
-                    "elements": [
-                        {
-                            "id": "riparianCommunityRaster",
-                            "type": "file",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "riparianCommunityGroup",
-                                         "useAttribute": "label"},
-                                        "raster_uri"],
-                            "label": "Raster location",
-                            "defaultValue": "",
-                            "required": true,
-                            "validateAs": {"type": "GDAL"}
-                        },
-                        {
-                            "id": "riparianCommunityBin",
-                            "type": "linearInterpolatedBin",
-                            "args_id": ["factors",
-                                        {"inheritFrom": "riparianCommunityGroup",
-                                         "useAttribute": "label"},
-                                         "bins"]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "id":"beneficiariesGroup",
             "type": "container",
             "collapsible": false,
@@ -381,6 +272,115 @@
                             "type": "linearInterpolatedBin",
                             "args_id": ["factors",
                                         {"inheritFrom": "beneficiariesGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "preprocessing_scripts",
+            "type": "label",
+            "label": "If needed, the raster inputs required below can be generated from the RIOS Preprocesing Toolkit <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
+        },
+        {
+            "id":"downslopeRetentionIndexGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Downslope retention index",
+            "elements": [
+                {
+                    "id": "downslopeRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "downslopeRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "downslopeRetentionIndexGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "",
+                            "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "downslopeBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "downslopeRetentionIndexGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"upslopeGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Upslope source",
+            "elements": [
+                {
+                    "id": "upslopeRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "upslopeRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "upslopeGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "", "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "upslopeBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "upslopeGroup",
+                                         "useAttribute": "label"},
+                                         "bins"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"riparianCommunityGroup",
+            "type": "container",
+            "collapsible": false,
+            "defaultValue": false,
+            "label": "Riparian continuity",
+            "elements": [
+                {
+                    "id": "riparianCommunityRasterList",
+                    "type": "list",
+                    "elements": [
+                        {
+                            "id": "riparianCommunityRaster",
+                            "type": "file",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "riparianCommunityGroup",
+                                         "useAttribute": "label"},
+                                        "raster_uri"],
+                            "label": "Raster location",
+                            "defaultValue": "",
+                            "required": true,
+                            "validateAs": {"type": "GDAL"}
+                        },
+                        {
+                            "id": "riparianCommunityBin",
+                            "type": "linearInterpolatedBin",
+                            "args_id": ["factors",
+                                        {"inheritFrom": "riparianCommunityGroup",
                                          "useAttribute": "label"},
                                          "bins"]
                         }

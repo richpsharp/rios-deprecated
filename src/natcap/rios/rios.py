@@ -16,7 +16,7 @@ import numpy
 import natcap.rios.disk_sort
 import pygeoprocessing
 
-LOGGER = logging.getLogger('IPA')
+LOGGER = logging.getLogger('natcap.rios.ipa')
 
 def execute(args):
     """wrapper for the _30 entry point"""

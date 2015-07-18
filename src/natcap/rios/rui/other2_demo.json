@@ -47,11 +47,6 @@
             ]
         },
         {
-            "id": "preprocessing_scripts",
-            "type": "label",
-            "label": "If needed, the raster inputs required below can be generated from the ArcGIS-based preprocessing scripts <a href=\"http://www.naturalcapitalproject.org/rios_download.html\">provided here.</a>"
-        },
-        {
             "id": "rios_model_type",
             "type": "hiddenElement",
             "args_id": "rios_model_type",
