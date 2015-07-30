@@ -12,8 +12,6 @@ HIDDENIMPORTS = [
   'scipy.linalg.cython_lapack',
   'scipy.special._ufuncs_cxx',
   'scipy.sparse.linalg.dsolve._superlu',
-  'pygeoprocessing',
-  'natcap.rios'
 ]
 
 SCRIPT = 'exescripts/rios_cli.py'
@@ -33,8 +31,8 @@ exe = EXE(
   pyz,
   a.binaries + [
       ('geos_c.dll', os.path.join(shapely.__path__[0], 'DLLs', 'geos_c.dll'), 'BINARY'),
-#      ('msvcp90.dll', 'C:\\Windows\\System32\\msvcp90.dll', 'BINARY'),
-#      ('msvcr90.dll', 'C:\\Windows\\System32\\msvcr90.dll', 'BINARY'),
+      ('msvcp90.dll', 'C:\\Windows\\System32\\msvcp90.dll', 'BINARY'),
+      ('msvcr90.dll', 'C:\\Windows\\System32\\msvcr90.dll', 'BINARY'),
   ] if is_win else a.binaries,
   a.scripts,
   name='rios_cli_%s.exe' % natcap.rios.__version__,
