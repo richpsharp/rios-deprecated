@@ -12,6 +12,7 @@ HIDDENIMPORTS = [
   'scipy.linalg.cython_lapack',
   'scipy.special._ufuncs_cxx',
   'scipy.sparse.linalg.dsolve._superlu',
+  'pygeoprocessing',
 ]
 
 SCRIPT = 'exescripts/rios_cli.py'
