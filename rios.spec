@@ -13,6 +13,7 @@ HIDDENIMPORTS = [
   'scipy.special._ufuncs_cxx',
   'scipy.sparse.linalg.dsolve._superlu',
   'pygeoprocessing',
+  'natcap.rios'
 ]
 
 SCRIPT = 'exescripts/rios_cli.py'
