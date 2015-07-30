@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.6 (2015/07/30)
+------------------
+
+* Patch to fix an issue where RIOS PORTER didn't launch and possibly an ImportError on "_superlu" on some machines.
+
 1.1.5 (2015/07/17)
 ------------------
 

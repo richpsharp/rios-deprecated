@@ -20,7 +20,7 @@ import pygeoprocessing.geoprocessing
 from natcap.rios.rui import base_widgets
 from natcap.rios import porter_core
 import natcap.rios
-from natcap.rios import rios_ipa
+from natcap.rios.rui import rios_ipa
 
 logging.basicConfig(
     format='%(asctime)s %(name)-5s %(levelname)-5s %(message)s',
