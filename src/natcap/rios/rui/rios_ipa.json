@@ -109,7 +109,7 @@
                                     "args_id": "lulc_coefficients_table_uri",
                                     "validateAs": {
                                         "type": "CSV",
-                                        "fieldsExist": ["lucode", "native_veg", "Sed_Exp", "Sed_Ret", "N_Exp", "N_Ret", "P_Exp", "P_Ret", "Rough_Rank", "Cover_Rank", "root_depth", "Kc", "LULC_veg", "usle_c", "usle_p"]
+                                        "fieldsExist": ["description", "lucode", "native_veg", "Sed_Exp", "Sed_Ret", "N_Exp", "N_Ret", "P_Exp", "P_Ret", "Rough_Rank", "Cover_Rank", "root_depth", "Kc", "LULC_veg", "usle_c", "usle_p"]
                                     },
                                     "helpText": "Table in .csv (Comma Separated Value) format, containing model input coefficients specific to each Objective. Default values are provided in the RIOS_default_LULC_coefficients.csv file. Land use codes in this table (lucode) must match the integer values in the LULC raster provided above."
                                 },
