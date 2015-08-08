@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.7 (2015/08/07)
+------------------
+
+* Validating lulc coefficients table to ensure there is a field called 'description'.  If left out this caused a case where IPA ran normally but PORTER would crash looking for that field.
+
 1.1.6 (2015/07/30)
 ------------------
 
