@@ -21,7 +21,7 @@ REQUIREMENTS = [
     'numpy',
     'scipy>=0.13.0',
     'gdal',
-    'pygeoprocessing==0.3.0a3',
+    'pygeoprocessing==0.3.0a7',
     'pyqt4',
     ]
 

@@ -7,6 +7,8 @@ import os
 import csv
 import shutil
 import math
+import cStringIO
+import codecs
 
 from osgeo import gdal
 import scipy.ndimage
@@ -15,6 +17,51 @@ import numpy
 import pygeoprocessing.geoprocessing
 
 LOGGER = logging.getLogger('rios.porter_core')
+
+class UnicodeWriter(object):
+    """
+    A CSV writer which will write rows to CSV file "f",
+    which is encoded in the given encoding. Taken from
+    https://docs.python.org/2/library/csv.html#examples
+    """
+
+    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
+        # Redirect output to a queue
+        self.queue = cStringIO.StringIO()
+        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
+        self.stream = f
+        self.encoder = codecs.getincrementalencoder(encoding)()
+
+    def writerow(self, row):
+        """Write row to CSV table
+
+        row - comma separated text row
+
+        returns None"""
+        LOGGER.debug(row)
+
+        self.writer.writerow([
+            s.encode("utf-8") if isinstance(s, unicode) else s for s in row])
+        # Fetch UTF-8 output from the queue ...
+        data = self.queue.getvalue()
+        data = data.decode("utf-8")
+        # ... and reencode it into the target encoding
+        data = self.encoder.encode(data)
+        # write to the target stream
+        self.stream.write(data)
+        # empty queue
+        self.queue.truncate(0)
+
+    def writerows(self, rows):
+        """Write multiple rows to csv
+
+        rows - iterable with CSV formatted text strings
+
+        returns None"""
+
+        for row in rows:
+            self.writerow(row)
+
 
 def linear_interpolate(dict_a, dict_b, parameter):
     """Creates a dictionary elements that are pairwise interpolated
@@ -565,7 +612,7 @@ def create_scenarios(
     for dataset_type in scenario_lulc_list:
         csv_path = porter_file_registry[dataset_type + '_coefficients_uri']
         scenario_lulc_dataset[dataset_type] = \
-            {'csv_writer' : csv.writer(open(csv_path, 'wb'))}
+            {'csv_writer' : UnicodeWriter(open(csv_path, 'wb'))}
         scenario_lulc_dataset[dataset_type]['csv_writer'].\
             writerow(lulc_coefficients_headers)
 
