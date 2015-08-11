@@ -535,16 +535,10 @@ class Executor(threading.Thread):
                # Model name is name of module file, minus the extension
                 model_name = os.path.splitext(os.path.basename(module))[0]
                 LOGGER.debug('Loading %s from %s', model_name, model)
-            elif getattr(sys, 'frozen', False) and getattr(sys, '_MEIPASS', False):
+            else:
                 model = import_module(module)
                 model_name = os.path.splitext(os.path.basename(module))[0]
                 LOGGER.debug('Loading %s in frozen environment', model)
-            else:
-                LOGGER.debug('PATH: %s', sys.path)
-                module_list = module.split('.')
-                model = locate_module(module_list)
-                model_name = module_list[-1]  # model name is last entry in list
-                LOGGER.debug('Loading %s from PATH', model_name)
         except ImportError as e:
             LOGGER.error('ImportError found when locating %s', module)
             self.printTraceback()
