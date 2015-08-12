@@ -1,6 +1,12 @@
 Release History
 ===============
 
+1.1.8 (2015/08/11)
+------------------
+
+* Fixed a bug that causes a PORTER crash when no ag or restoration transitions occur in IPA.
+* Fixed internal import and pyinstaller errors that caused headaches when working on a local source branch.
+
 1.1.7 (2015/08/07)
 ------------------
 
