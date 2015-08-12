@@ -825,7 +825,11 @@ def create_scenarios(
             interpolated_values['description'])
 
         for header in header_to_use_converted_value:
-            interpolated_values[header] = new_properties[header]
+            try:
+                interpolated_values[header] = new_properties[header]
+            except UnboundLocalError:
+                LOGGER.debug(header)
+
         new_values = [
             interpolated_values[x] for x in lulc_coefficients_headers]
         scenario_lulc_dataset['unprotected']['csv_writer'].writerow(new_values)
