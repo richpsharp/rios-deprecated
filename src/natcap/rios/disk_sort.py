@@ -3,8 +3,11 @@
 import tempfile
 import struct
 import heapq
+import atexit
+import os
 
 import numpy
+import pygeoprocessing
 
 
 def sort_to_disk(
