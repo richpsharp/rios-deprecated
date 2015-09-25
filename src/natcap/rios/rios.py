@@ -617,10 +617,10 @@ def calculate_activity_portfolio(args, report_data=None):
 
     LOGGER.info('sort the prefer/prevent/activity score to disk')
     for activity_index, activity_name in enumerate(activity_list):
-        #Creating the activity iterators here.
+        #Creating the activity iterators here, sorting by highest to lowest.
         activity_iterators[activity_index] = natcap.rios.disk_sort.sort_to_disk(
             budget_selection_activity_uris[activity_name],
-            activity_index)
+            activity_index, score_weight=-1.0)
 
     #This section counts how many pixels TOTAL we have available for setting
     total_available_pixels = 0

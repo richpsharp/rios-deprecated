@@ -1,6 +1,12 @@
 Release History
 ===============
 
+1.1.9 (2015/09/25)
+------------------
+
+* Fixed an issue where large numbers of activities and/or large input raster sizes would cause a too many open files OS error on the prioritization step.  As an additional positive side effect, runtime performance of RIOS is slightly improved.
+
+
 1.1.8 (2015/08/11)
 ------------------
 
