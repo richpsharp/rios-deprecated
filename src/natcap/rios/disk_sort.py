@@ -30,7 +30,7 @@ def sort_to_disk(
         decreasing sorted order by value * score_weight"""
 
     def _read_score_index_from_disk(
-            score_file_name, index_file_name, buffer_size=4*10000):
+            score_file_name, index_file_name, buffer_size=1024):
         """Generator to yield a float/int value from the given filenames.
         reads a buffer of `buffer_size` big before to avoid keeping the
         file open between generations."""
