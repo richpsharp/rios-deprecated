@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.10 (2015/09/29)
+-------------------
+
+* Fixes another issue where too many activities and/or large input raster sizes would cause the buffering in the disk based sort to memory error.  Reduced the buffer item size from 40,000 per block to 1,024 per block.
+
 1.1.9 (2015/09/25)
 ------------------
 
