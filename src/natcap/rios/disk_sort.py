@@ -12,7 +12,7 @@ import pygeoprocessing
 
 def sort_to_disk(
         dataset_uri, dataset_index, score_weight=1.0,
-        cache_element_size=2**25):
+        cache_element_size=2**17):
     """Sorts the non-nodata pixels in the dataset on disk and returns
     an iterable in sorted order.
 
@@ -39,7 +39,6 @@ def sort_to_disk(
         index_buffer = ''
         file_offset = 0
         buffer_offset = 1  # initialize to 1 to trigger the first load
-
         while True:
             if buffer_offset >= len(score_buffer):
                 score_file = open(score_file_name, 'rb')
@@ -83,6 +82,10 @@ def sort_to_disk(
         score_file.write(struct.pack('%sf' % score_cache.size, *score_cache))
         index_file = tempfile.NamedTemporaryFile(delete=False)
         index_file.write(struct.pack('%si' % index_cache.size, *index_cache))
+
+        index_cache = None
+        score_cache = None
+        sort_index = None
 
         #Get the filename and register a command to delete it after the
         #interpreter exits
@@ -150,4 +153,5 @@ def sort_to_disk(
             score_cache = numpy.empty((0,), dtype=numpy.float32)
 
     iters.append(_sort_cache_to_iterator(index_cache, score_cache))
+    LOGGER.debug('%s: len(iters)=%d', dataset_uri, len(iters))
     return heapq.merge(*iters)
