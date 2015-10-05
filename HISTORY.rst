@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.11 (2015/10/04)
+-------------------
+
+* Addresses yet another memory issue related to large numbers of RIOS activities.
+
 1.1.10 (2015/09/29)
 -------------------
 
