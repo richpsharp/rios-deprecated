@@ -1531,6 +1531,7 @@ def _dump_to_table(dictionary, table_uri, key_name, value_name):
 
 
 def make_exponential_decay_kernel_uri(expected_distance, kernel_uri):
+    """Make a raster that has a exponential decay kernel"""
     max_distance = expected_distance * 5
     kernel_size = int(numpy.round(max_distance * 2 + 1))
 
@@ -1541,11 +1542,11 @@ def make_exponential_decay_kernel_uri(expected_distance, kernel_uri):
 
     #Make some kind of geotransform, it doesn't matter what but
     #will make GIS libraries behave better if it's all defined
-    kernel_dataset.SetGeoTransform( [ 444720, 30, 0, 3751320, 0, -30 ] )
+    kernel_dataset.SetGeoTransform([444720, 30, 0, 3751320, 0, -30])
     srs = osr.SpatialReference()
-    srs.SetUTM( 11, 1 )
-    srs.SetWellKnownGeogCS( 'NAD27' )
-    kernel_dataset.SetProjection( srs.ExportToWkt() )
+    srs.SetUTM(11, 1)
+    srs.SetWellKnownGeogCS('NAD27')
+    kernel_dataset.SetProjection(srs.ExportToWkt())
 
     kernel_band = kernel_dataset.GetRasterBand(1)
     kernel_band.SetNoDataValue(-9999)
@@ -1554,7 +1555,7 @@ def make_exponential_decay_kernel_uri(expected_distance, kernel_uri):
     integration = 0.0
     for row_index in xrange(kernel_size):
         distance_kernel_row = numpy.sqrt(
-            (row_index - max_distance) ** 2 + (col_index - max_distance) ** 2).reshape(1,kernel_size)
+            (row_index - max_distance) ** 2 + (col_index - max_distance) ** 2).reshape(1, kernel_size)
         kernel = numpy.where(
             distance_kernel_row > max_distance, 0.0, numpy.exp(-distance_kernel_row / expected_distance))
         integration += numpy.sum(kernel)
