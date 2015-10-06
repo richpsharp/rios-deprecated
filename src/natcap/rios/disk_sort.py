@@ -153,5 +153,4 @@ def sort_to_disk(
             score_cache = numpy.empty((0,), dtype=numpy.float32)
 
     iters.append(_sort_cache_to_iterator(index_cache, score_cache))
-    LOGGER.debug('%s: len(iters)=%d', dataset_uri, len(iters))
     return heapq.merge(*iters)

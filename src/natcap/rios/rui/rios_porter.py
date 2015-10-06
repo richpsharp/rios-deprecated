@@ -358,7 +358,7 @@ class RsatUI(base_widgets.ExecRoot):
 
             if filename != '':
                 arguments = self.get_ui_args()
-                invest_natcap.rui.fileio.save_model_run(arguments, model, filename)
+                natcap.rios.rui.fileio.save_model_run(arguments, model, filename)
 
     def queueOperations(self):
         ui_args = self.get_ui_args()
