@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.12 (2015/10/06)
+-------------------
+
+* Patching a LOGGER.debug syntax error on the disk sort routine.
+
 1.1.11 (2015/10/04)
 -------------------
 
