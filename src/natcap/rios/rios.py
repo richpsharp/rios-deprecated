@@ -159,9 +159,7 @@ def execute_30(**args):
     for objective_name, objective_dict in args['objectives'].iteritems():
         #we should only sort and prioritize an objective's biophysical
         #factors if the user has provided biophysical factors.
-        LOGGER.debug('OBJECTIVE_DICT %s', objective_dict)
         if objective_dict['rios_model_type'] == 'rios_tier_0':
-            LOGGER.debug('Executing a RIOS Tier 0 objective')
             if 'factors' in objective_dict:
                 normalize_args = {
                     'output_dir': os.path.join(
@@ -201,7 +199,6 @@ def execute_30(**args):
             args['lulc_uri'])
         }
     calculate_global_transitions(transition_args)
-
     LOGGER.info('Converting transitions to activities')
 
     activity_score_args = {
@@ -388,9 +385,13 @@ def _calculate_global_transition(args, transition_basename, objective_weights_di
             nodata_mask = nodata_mask | (value == nodata)
             weight += value * objective_weights[index]
 
-        #return nodata_mask
+        # deal with the case where an objective weight might be zeroed out
+        objective_weight_sum = sum(objective_weights)
+        if objective_weight_sum == 0.0:
+            objective_weight_sum = 1.0
+        # return nodata_mask
         return numpy.where(
-            ~nodata_mask, weight / sum(objective_weights), transition_nodata)
+            ~nodata_mask, weight / objective_weight_sum, transition_nodata)
 
     #Boilerplate for vectorize_datasets
     transition_out_uri = os.path.join(
@@ -717,7 +718,6 @@ def calculate_activity_portfolio(args, report_data=None):
             #that have budget on the pixel
             valid_activity_iterators = []
 
-            LOGGER.debug("reallocating activity budget pixels")
             for activity_index, pixel_budget in enumerate(
                     max_possible_activity_pixels):
                 if pixel_budget > 0:
@@ -743,7 +743,7 @@ def calculate_activity_portfolio(args, report_data=None):
 
                 #Otherwise, allocate the pixel
                 if total_available_pixels % 10000 == 0:
-                    LOGGER.debug("year %s activity: allocating pixel %s for activity %s pixels left %s" % (year_index + 1, flat_index, activity_index,total_available_pixels))
+                    LOGGER.info("year %s activity: allocating pixels for activity %s pixels left %s" % (year_index + 1, activity_index,total_available_pixels))
                 activity_array[flat_index] = activity_index
                 activity_budget[activity_index] -= activity_cost[activity_index]
 
@@ -762,8 +762,6 @@ def calculate_activity_portfolio(args, report_data=None):
                 if max_possible_activity_pixels[activity_index] == 0 or total_available_pixels == 0:
                     #update the iterator
                     break
-
-        LOGGER.debug('finishing activity selection max_possible_activity_pixels %s, total_available_pixels %s heap_empty %s' % (max_possible_activity_pixels, total_available_pixels, heap_empty))
 
         #Now reallocate any remaining activity budget as float and spend through
         #whatever pixels are left
@@ -799,7 +797,7 @@ def calculate_activity_portfolio(args, report_data=None):
 
                 #Otherwise, allocate the pixel
                 if total_available_pixels % 10000 == 0:
-                    LOGGER.debug("year %s float_budget: allocating pixel %s for activity %s pixels left %s" % (year_index + 1, flat_index, activity_index,total_available_pixels))
+                    LOGGER.info("year %s float_budget: allocating pixels for activity %s pixels left %s" % (year_index + 1, activity_index,total_available_pixels))
                 activity_array[flat_index] = activity_index
                 floating_budget -= activity_cost[activity_index]
                 report_data_dict['activity_spent'][activity_list[activity_index]] += activity_cost[activity_index]
@@ -812,7 +810,7 @@ def calculate_activity_portfolio(args, report_data=None):
                     #update the iterator
                     break
 
-        LOGGER.debug('finishing floating floating_budget %s, total_available_pixels %s heap_empty %s' % (floating_budget, total_available_pixels, heap_empty))
+        LOGGER.info('finishing floating floating_budget %s, total_available_pixels %s heap_empty %s' % (floating_budget, total_available_pixels, heap_empty))
 
         activity_portfolio_uri = os.path.join(
             directory_registry['continuous_activity_portfolio'],
@@ -960,7 +958,7 @@ def _mask_activity_areas(
     for lucode, activity_list in args['lulc_activity_potential_map'].iteritems():
         if activity_name in activity_list:
             lucodes_to_allow.add(int(lucode))
-    LOGGER.debug('activity_name %s allowed lu codes: %s' % (activity_name, str(lucodes_to_allow)))
+    LOGGER.info('activity_name %s allowed lu codes: %s' % (activity_name, str(lucodes_to_allow)))
     #make sure it's a float for division below
     per_cell_cost = float(per_cell_cost)
     def _activity_prevent_prefer(
@@ -1062,7 +1060,6 @@ def _rasterize_activity_action(shapefile_uri_list, activity_name, action_type, b
                 # activity is prevented and set the value of the field
                 # accordingly.
                 if shape_activity_name == activity_name and action == action_type:
-                    LOGGER.debug('Creating feature %s in temp layer', f_index)
                     feat_geometry = feature.GetGeometryRef()
                     temp_feature = ogr.Feature(temp_layer_defn)
                     temp_layer.CreateFeature(temp_feature)
@@ -1073,7 +1070,7 @@ def _rasterize_activity_action(shapefile_uri_list, activity_name, action_type, b
                 else:
                     # Make a note of which activity/action/feature combination
                     # we're skipping, just for information.
-                    LOGGER.debug('SKIPPING: %s , %s  && %s, %s',
+                    LOGGER.info('SKIPPING: %s , %s  && %s, %s',
                         activity_name, shape_activity_name, action,
                         action_type)
             # We need to reset the reading here ... this resets the looping
@@ -1109,13 +1106,11 @@ def _normalize_raster(
 
         returns interpolated GDAL dataset."""
 
-    LOGGER.debug('_normalize_raster')
     nodata_input = pygeoprocessing.geoprocessing.get_nodata_from_uri(input_raster_uri)
     interp_type = interp_dict['interpolation']
     if interp_type == 'linear':
         raster_min, raster_max, _, _ = pygeoprocessing.geoprocessing.get_statistics_from_uri(
             input_raster_uri)
-        LOGGER.debug('raster_min, raster_max %f %f' % (raster_min, raster_max))
         domain = float(raster_max - raster_min)
         #If the domain is 0 that means the numerator of the fraction will
         #always be zero, so just set the denominator to 1.
@@ -1139,7 +1134,6 @@ def _normalize_raster(
                 #    return nodata_output
                 #return (pixel_value - raster_min) / domain
 
-        LOGGER.debug('_normalize_raster calling vectorize datasets')
         pygeoprocessing.geoprocessing.vectorize_datasets(
             [input_raster_uri, lulc_uri], interpolate, output_raster_uri,
             gdal.GDT_Float32, nodata_output, pixel_size_out, 'intersection',
@@ -1233,7 +1227,6 @@ def _create_objective_transition_scores(args):
         returns nothing"""
 
     pygeoprocessing.geoprocessing.create_directories([args['output_dir']])
-
     for transition_name, factors in args['priorities'].iteritems():
         transition_uri = os.path.join(args['output_dir'], transition_name + '%s.tif' % args['results_suffix'])
         LOGGER.info('Creating %s transition raster', transition_uri)
@@ -1260,6 +1253,7 @@ def _create_objective_transition_scores(args):
         _create_objective_transition_score(
             raster_nodata, weights, raster_list, transition_uri,
             args['cell_size'])
+
 
 
 def _create_objective_transition_score(

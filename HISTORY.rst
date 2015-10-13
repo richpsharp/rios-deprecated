@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.13 (2015/10/13)
+-------------------
+
+* Fixing an issue where a user could put zeros across the transition columns and the activity score would get an "nan" when dividing by the total weight.  Now setting denominator of weighted average to 1.0 in cases where the total weight sum is 0.0.
+
 1.1.12 (2015/10/06)
 -------------------
 
