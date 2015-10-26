@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.14 (2015/10/26)
+-------------------
+
+* Patching an issue where a complicated RIOS run with many large raster files and many large vector files would cause RIOS to segfault when making the activity preference/mask layer during prioritization.
+
 1.1.13 (2015/10/13)
 -------------------
 

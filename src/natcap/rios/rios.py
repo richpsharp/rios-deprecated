@@ -7,6 +7,7 @@ import json
 import shutil
 import heapq
 import datetime
+import tempfile
 
 from osgeo import gdal
 from osgeo import ogr
@@ -1014,12 +1015,13 @@ def _write_array_to_uri(array, base_ds_uri, ds_nodata, ds_uri):
     dataset = None
 
 
-def _rasterize_activity_action(shapefile_uri_list, activity_name, action_type, base_uri, out_uri):
+def _rasterize_activity_action(
+        shapefile_uri_list, activity_name, action_type, base_uri, out_uri):
     """A helper function that will make a mask of all the features in a list
         of shapefiles that have the requested activty name and action type.
 
-        shapefile_uri_list - a list of shapefile uris which have at least fields
-            'activity_n' and 'action'
+        shapefile_uri_list - a list of shapefile uris which have at least
+            fields 'activity_n' and 'action'
         activity_name - the name of an activity that might be found in the
             shapefile 'activity_n' field.
         action - the name of an action in the 'action' field of the shapefile
@@ -1040,17 +1042,27 @@ def _rasterize_activity_action(shapefile_uri_list, activity_name, action_type, b
     if len(shapefile_uri_list) == 0:
         return
 
-    shapefile_datasets = map(ogr.Open, shapefile_uri_list)
-    sample_srs = shapefile_datasets[0].GetLayer(0).GetSpatialRef()
+    sample_vector = ogr.Open(shapefile_uri_list[0])
+    sample_layer = sample_vector.GetLayer()
+    sample_srs = sample_layer.GetSpatialRef()
+    sample_layer = None
+    sample_vector = None
 
-    ogr_driver = ogr.GetDriverByName('Memory')
-    temp_shapefile = ogr_driver.CreateDataSource(pygeoprocessing.geoprocessing.temporary_filename())
-    temp_layer = temp_shapefile.CreateLayer('temp_shapefile', sample_srs, geom_type=ogr.wkbPolygon)
-    temp_layer_defn = temp_layer.GetLayerDefn()
+    mask_vector_temp_dir = tempfile.mkdtemp()
+    mask_vector_path = os.path.join(mask_vector_temp_dir, 'mask.shp')
+    esri_driver = ogr.GetDriverByName('ESRI Shapefile')
+    mask_vector = esri_driver.CreateDataSource(mask_vector_path)
+    mask_layer = mask_vector.CreateLayer(
+        'mask', sample_srs, geom_type=ogr.wkbPolygon)
 
-    for shapefile in shapefile_datasets:
+    for shapefile_path in shapefile_uri_list:
+        shapefile = ogr.Open(shapefile_path)
+        skipped_previous = False
         for layer in shapefile:
-            for f_index, feature in enumerate(layer):
+            # reset reading just in case, i'm debugging a segfault and
+            # everything is suspicious
+            layer.ResetReading()
+            for feature in layer:
                 shape_activity_name = feature.GetField(
                     feature.GetFieldIndex('activity_n'))
                 action = feature.GetField(feature.GetFieldIndex('action'))
@@ -1060,30 +1072,30 @@ def _rasterize_activity_action(shapefile_uri_list, activity_name, action_type, b
                 # activity is prevented and set the value of the field
                 # accordingly.
                 if shape_activity_name == activity_name and action == action_type:
-                    feat_geometry = feature.GetGeometryRef()
-                    temp_feature = ogr.Feature(temp_layer_defn)
-                    temp_layer.CreateFeature(temp_feature)
-                    temp_feature.SetGeometry(feat_geometry)
-                    temp_feature.SetFrom(feature)
-                    temp_layer.SetFeature(temp_feature)
-                    temp_feature.Destroy()
+                    mask_layer.CreateFeature(feature)
+                    skipped_previous = False
                 else:
                     # Make a note of which activity/action/feature combination
                     # we're skipping, just for information.
-                    LOGGER.info('SKIPPING: %s , %s  && %s, %s',
-                        activity_name, shape_activity_name, action,
-                        action_type)
-            # We need to reset the reading here ... this resets the looping
-            # counter so that the next time we loop over this shapefile, we'll
-            # start at the first feature.
-            layer.ResetReading()
+                    if not skipped_previous:
+                        LOGGER.info(
+                            'SKIPPING %s: %s == %s && %s == %s',
+                            os.path.basename(shapefile_path), activity_name,
+                            shape_activity_name, action, action_type)
+                        skipped_previous = True
 
     # Just in case anything has not been flushed to disk, do so now.
-    temp_layer.SyncToDisk()
+    mask_layer.SyncToDisk()
 
     # Rasterize this layer onto the copied raster.
     mask_dataset = gdal.Open(out_uri, gdal.GA_Update)
-    gdal.RasterizeLayer(mask_dataset, [1], temp_layer, burn_values=[1])
+    gdal.RasterizeLayer(mask_dataset, [1], mask_layer, burn_values=[1])
+
+    #Remove the temporary vector layer from disk
+    mask_layer = None
+    ogr.DataSource.__swig_destroy__(mask_vector)
+    mask_vector = None
+    shutil.rmtree(mask_vector_temp_dir)
 
 
 def _normalize_raster(
