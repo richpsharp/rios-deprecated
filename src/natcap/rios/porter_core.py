@@ -741,6 +741,12 @@ def create_scenarios(
     base_nodata = pygeoprocessing.geoprocessing.get_nodata_from_uri(
         lulc_raster_filename)
     transitioned_nodata = base_nodata
+    # hack to guard against unsigned int overflow, this will need to be
+    # revisited post PGP 1.0 that has better ways of dealing with unsigned
+    # nodata values
+    if transitioned_nodata > 2**31:
+        transitioned_nodata = -9999
+
     def new_lulc_op(original_lulc, transition_id, activity_id, max_native_type):
         """A method for vectorize_rasters that maps lulc and transition values
             to their new land cover types"""
