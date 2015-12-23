@@ -1,6 +1,11 @@
 Release History
 ===============
 
+1.1.15 (2015/12/23)
+-------------------
+
+* Patching an issue that can occur in RIOS PORTER when a user provides a landcover map with an unsigned int datatype and a nodata value that exceeds 2^31.  In this case the nodata value is arbitrarily set to -9999 on the output PORTER landcover map.
+
 1.1.14 (2015/10/26)
 -------------------
 
