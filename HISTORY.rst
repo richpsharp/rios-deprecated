@@ -4,6 +4,7 @@ Release History
 1.1.16 (2016/03/11)
 -------------------
 
+* Allowing activity transition effectiveness to be floating point numbers rather than just 0 and 1.
 * Removing the following unused outputs from RIOS:
     * [objective_x]\objective_level_transitions subdirectory and contents
     * continous_activity_portfolios subdirectory if budget_years == 1
