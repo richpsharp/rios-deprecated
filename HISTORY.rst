@@ -1,6 +1,15 @@
 Release History
 ===============
 
+1.1.16 (2016/03/11)
+-------------------
+
+* Removing the following unused outputs from RIOS:
+    * [objective_x]\objective_level_transitions subdirectory and contents
+    * continous_activity_portfolios subdirectory if budget_years == 1
+    * yearly_activity_portfolios subdirectory if budget_years == 1
+
+
 1.1.15 (2015/12/23)
 -------------------
 
