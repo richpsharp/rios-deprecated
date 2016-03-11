@@ -187,6 +187,9 @@ def execute_30(**args):
                             file_registry['lulc_uri'])
                     }
                 _create_objective_transition_scores(prioritize_args)
+                # the normalized output directory is deleted as a request to
+                # improve the uptake of RIOS
+                shutil.rmtree(normalize_args['output_dir'])
 
     LOGGER.info('calculating ipa transition scores')
     transition_args = {
@@ -924,6 +927,12 @@ def calculate_activity_portfolio(args, report_data=None):
     pygeoprocessing.geoprocessing.create_rat_uri(
         max_activity_transition_raster_uri, args['transition_dictionary'],
         "Transition")
+
+    # if only 1 year we don't need the continous outputs
+    # this was an issue identified as a bottlneck in wide scale uptake of RIOS
+    if args['budget_config']['years_to_spend'] == 1:
+        shutil.rmtree(directory_registry['continuous_activity_portfolio'])
+        shutil.rmtree(directory_registry['yearly_activity_portfolio'])
 
 def _make_distance_kernel(max_distance):
     kernel_size = int(numpy.round(max_distance * 2 + 1))

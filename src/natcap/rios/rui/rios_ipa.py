@@ -691,35 +691,8 @@ class BudgetConfigTable(Table):
                 pass
 
 class ActivityTransitionTable(Table):
-    class CheckBoxDelegate(QtGui.QStyledItemDelegate):
-        def createEditor(self, parent, option, index):
-            return QtGui.QCheckBox(parent)
-
-        def setEditorData(self, editor, index):
-            checked = index.model().data(index,
-                QtCore.Qt.DisplayRole).toString()
-            if checked == '1':
-                editor.setCheckState(QtCore.Qt.Checked)
-            else:
-                editor.setCheckState(QtCore.Qt.Unchecked)
-
-        def setModelData(self, editor, model, index):
-            if editor.checkState() == QtCore.Qt.Checked:
-                text = 1
-            else:
-                text = 0
-            model.setData(index, text)
-
-        def paint(self, painter, option, index):
-            value = index.model().data(index).toInt()[0]
-            if value == 1:
-                option.font.setBold(True)
-                option.font.setItalic(True)
-            QtGui.QStyledItemDelegate.paint(self, painter, option, index)
-
     def __init__(self, attributes):
         Table.__init__(self, attributes)
-        self.setItemDelegate(self.CheckBoxDelegate())
 
 class Vector(Table):
     def getOutputValue(self):
