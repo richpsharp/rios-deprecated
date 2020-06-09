@@ -1,10 +1,14 @@
 .. default-role:: code
 
-RIOS: Resource Investment Optimization System |build_image|
-===========================================================
 
-.. |build_image| image:: http://builds.naturalcapitalproject.org/buildStatus/icon?job=natcap.rios
-  :target: http://builds.naturalcapitalproject.org/view/Bitbucket%20builds/job/natcap.rios/
+**RIOS IS DEPRECATED**
+======================
+
+RIOS is no longer supported by the Natural Capital Project meaning we are unable to help with binary builds, bug fixes, or runtime support. This project has a permissinve OpenBSD 3-clause license and the code can be repurposed or used for any reason including commercial applications.
+
+
+RIOS: Resource Investment Optimization System
+===========================================================
 
 This repository is for RIOS 1.1.4 and later which replaces our Google Code project formerly located at http://code.google.com/p/invest-natcap.water-funds.
 
@@ -42,9 +46,12 @@ Questions RIOS can answer
 
 RIOS Dependencies
 ===================
+
 RIOS relies on the following python packages:
   * numpy
   * scipy>=0.13.0
   * gdal
   * pygeoprocessing>=0.3.0a3
   * pyqt4
+  
+  **RIOS IS DEPRECATED**
